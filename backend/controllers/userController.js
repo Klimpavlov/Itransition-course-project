@@ -12,7 +12,7 @@ const register = async (req, res) => {
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
-        const user = await User.create({name, email, hashedPassword});
+        const user = await User.create({name, email, password: hashedPassword});
         res.status(201).json({ message: "Registration success", user });
 
     } catch (error) {
@@ -26,17 +26,17 @@ const login = async (req, res) => {
     try {
         const user = await User.findOne({ where: { email } });
         if (!user) {
-            res.status(400).json({message: "User not found"})
+            return res.status(400).json({message: "User not found"})
         }
-        const isPasswordCorrect = bcrypt.compare(password, user.password)
+        const isPasswordCorrect = await bcrypt.compare(password, user.password)
         if (!isPasswordCorrect) {
-            res.status(400).json({message: "Invalid password"})
+            return res.status(400).json({message: "Invalid password"})
         }
 
         const token = jwt.sign({ id: user.id, isAdmin: user.isAdmin }, process.env.JWT_SECRET, { expiresIn: '1h' });
-        res.json({ message: "Success login", token });
+        return res.json({ message: "Success login", token });
     } catch (error) {
-        res.status(500).json({message: "Server error"});
+        return res.status(500).json({message: "Server error"});
     }
 }
 
