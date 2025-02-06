@@ -5,6 +5,8 @@ require('dotenv').config();
 //     host: process.env.DB_HOST,
 //     dialect: 'mysql'
 // });
+
+//temporary solution
 const sequelize = new Sequelize('courseProject', 'root', 'Kp11102002', {
     host: 'localhost',
     dialect: 'mysql'
