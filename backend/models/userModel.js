@@ -26,6 +26,10 @@ const User = sequelize.define('User', {
     isAdmin: {
         type: DataTypes.BOOLEAN,
         defaultValue: false
+    },
+    isBlocked: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
     }
 }, {
     timestamps: true
