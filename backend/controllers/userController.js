@@ -94,8 +94,12 @@ const deleteUser = async (req, res) => {
         res.status(403).json({message: "User is not an administrator"});
     }
     try {
-        await User.destroy({where: {id}});
-        res.json({message: "User is successfully deleted"});
+        const deletedRowsCount = await User.destroy({where: {id}});
+        if (deletedRowsCount === 0) {
+            res.status(404).json({ message: 'User not found.' });
+        } else {
+            res.json({ message: 'User deleted successfully.' });
+        }
     } catch (error) {
         res.status(500).json({message: "Server error"});
     }
