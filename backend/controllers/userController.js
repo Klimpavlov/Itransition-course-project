@@ -88,6 +88,19 @@ const removeAdmin = async (req, res) => {
     }
 }
 
+const deleteUser = async (req, res) => {
+    const {id} = req.params;
+    if (!req.user.isAdmin) {
+        res.status(403).json({message: "User is not an administrator"});
+    }
+    try {
+        await User.destroy({where: {id}});
+        res.json({message: "User is successfully deleted"});
+    } catch (error) {
+        res.status(500).json({message: "Server error"});
+    }
+}
+
 const toggleBlockUser = async (req, res) => {
     const {id} = req.params;
     if (!req.user.isAdmin) {
@@ -107,4 +120,4 @@ const toggleBlockUser = async (req, res) => {
     }
 
 }
-module.exports = {register, login, getUsers, makeAdmin, removeAdmin, toggleBlockUser}
+module.exports = {register, login, getUsers, makeAdmin, removeAdmin, toggleBlockUser, deleteUser}
