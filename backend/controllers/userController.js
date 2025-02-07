@@ -16,6 +16,7 @@ const register = async (req, res) => {
         res.status(201).json({message: "Registration success", user});
 
     } catch (error) {
+        console.log(error);
         res.status(500).json({message: "Server error"});
     }
 }
@@ -55,6 +56,7 @@ const getUsers = async (req, res) => {
         console.log('Fetched users:', users);
         res.json(users);
     } catch (error) {
+        console.log(error);
         res.status(500).json({message: "Server error"});
     }
 }
@@ -69,6 +71,7 @@ const makeAdmin = async (req, res) => {
         await User.update({isAdmin: true}, {where: {id}});
         res.json({message: "User is an administrator now"})
     } catch (error) {
+        console.log(error);
         res.status(500).json({message: "Server error"});
     }
 
@@ -84,6 +87,7 @@ const removeAdmin = async (req, res) => {
         await User.update({isAdmin: false}, {where: {id}});
         res.json({message: "User is not an administrator now"})
     } catch (error) {
+        console.log(error);
         res.status(500).json({message: "Server error"});
     }
 }
@@ -101,6 +105,7 @@ const deleteUser = async (req, res) => {
             res.json({ message: 'User deleted successfully.' });
         }
     } catch (error) {
+        console.log(error);
         res.status(500).json({message: "Server error"});
     }
 }
@@ -120,6 +125,7 @@ const toggleBlockUser = async (req, res) => {
         res.json({message: `User has been ${user.isBlocked ? "unblocked" : "blocked"}`});
 
     } catch (error) {
+        console.log(error);
         res.status(500).json({message: "Server error"});
     }
 

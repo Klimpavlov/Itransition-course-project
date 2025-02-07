@@ -8,11 +8,12 @@ const bcrypt = require('bcryptjs');
 
 
 const userRoutes = require('./routes/userRoutes');
+const templateRoutes = require('./routes/templateRoutes')
 const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use('/api', userRoutes);
+app.use('/api', userRoutes, templateRoutes);
 
 const PORT = process.env.PORT || 3001;
 
