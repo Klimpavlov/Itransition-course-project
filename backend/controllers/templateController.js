@@ -6,6 +6,7 @@ const createTemplate = async (req, res) => {
     const {title, category, isPublic} = req.body;
 
     if (!title) {
+        console.log("Title is required");
         return res.status(400).json({message: "Title is required"});
     }
 
@@ -14,7 +15,9 @@ const createTemplate = async (req, res) => {
             title,
             category,
             isPublic,
-            user_id: req.user.id});
+            user_id: req.user.id
+        });
+        console.log("Template is created", template);
         res.status(200).json({message: "Template is created", template})
     } catch (error) {
         console.log(error);

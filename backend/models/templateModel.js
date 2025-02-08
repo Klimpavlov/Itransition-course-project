@@ -22,14 +22,15 @@ const Template = sequelize.define("Template", {
     },
     category: {
         type: DataTypes.STRING,
-        allowNull: true
+        allowNull: false
     },
-    isPublic: {
+    is_public: {
         type: DataTypes.BOOLEAN,
         defaultValue: false
-    }
+    },
 }, {
-    timestamps: true
+    timestamps: true,
+    underscored: true
 });
 
 module.exports = Template;
