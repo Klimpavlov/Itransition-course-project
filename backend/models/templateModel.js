@@ -1,4 +1,5 @@
 const {DataTypes} = require('sequelize');
+const User = require('./userModel')
 const sequelize =  require('../config/db');
 
 const Template = sequelize.define("Template", {
@@ -12,7 +13,7 @@ const Template = sequelize.define("Template", {
         allowNull: false,
         primaryKey: true,
         references: {
-            model: 'Users',
+            model: User,
             key: 'id'
         }
     },
