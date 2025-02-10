@@ -34,6 +34,7 @@ const getTemplates = async (req, res) => {
         console.log(templates);
         res.status(200).json({message: "Fetched templates:", templates})
     } catch (error) {
+        console.log(error);
         res.status(500).json({message: "Server error"})
     }
 }
@@ -47,6 +48,7 @@ const getTemplateQuestions = async (req, res) => {
         });
         res.status(200).json({message: "Fetched questions", questions});
     }  catch (error) {
+        console.log(error)
         res.status(500).json({ message: "Server error", error: error.message });
     }
 }
