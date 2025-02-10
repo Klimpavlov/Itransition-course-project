@@ -1,6 +1,6 @@
 const {DataTypes} = require('sequelize');
-const Template = require('/templateModel');
-const User = require('/userModel');
+const Template = require('./templateModel');
+const User = require('./userModel');
 const sequelize = require('../config/db');
 
 const Form = sequelize.define("Form", {

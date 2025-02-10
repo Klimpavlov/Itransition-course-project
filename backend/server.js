@@ -10,11 +10,13 @@ const bcrypt = require('bcryptjs');
 const userRoutes = require('./routes/userRoutes');
 const templateRoutes = require('./routes/templateRoutes');
 const questionRoutes = require('./routes/questionRoutes');
+const formRoutes = require('./routes/formRoutes');
+const answerRoutes = require('./routes/answerRoutes');
 const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use('/api', userRoutes, templateRoutes, questionRoutes);
+app.use('/api', userRoutes, templateRoutes, questionRoutes, formRoutes, answerRoutes);
 
 const PORT = process.env.PORT || 3001;
 

@@ -1,6 +1,9 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const Template = require('../models/templateModel');
+const User = require('../models/userModel');
+const Form = require('../models/formModel');
+const Question = require("../models/questionModel");
 
 const createTemplate = async (req, res) => {
     const {title, category, is_public} = req.body;
@@ -35,4 +38,33 @@ const getTemplates = async (req, res) => {
     }
 }
 
-module.exports = {createTemplate, getTemplates}
+const getTemplateQuestions = async (req, res) => {
+    const {template_id} = req.params;
+    try {
+        const questions = await Question.findAll({
+            where: {template_id},
+            order: [['position', 'ASC']]
+        });
+        res.status(200).json({message: "Fetched questions", questions});
+    }  catch (error) {
+        res.status(500).json({ message: "Server error", error: error.message });
+    }
+}
+
+const getTemplateForms = async (req, res) => {
+    const { template_id } = req.params;
+
+    try {
+        const forms = await Form.findAll({
+            where: { template_id },
+            include: { model: User, attributes: ['name', 'email'] }
+        });
+
+        res.status(200).json({message: "Fetched forms:"}, forms);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Server error", error: error.message });
+    }
+};
+
+module.exports = {createTemplate, getTemplates, getTemplateQuestions, getTemplateForms}
