@@ -1,9 +1,12 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const Template = require('../models/templateModel');
-const User = require('../models/userModel');
-const Form = require('../models/formModel');
-const Question = require("../models/questionModel");
+// const Template = require('../models/templateModel');
+// const User = require('../models/userModel');
+// const Form = require('../models/formModel');
+// const Question = require("../models/questionModel");
+// const Answer = require("../models/answerModel");
+const { User, Form, Answer, Question, Template } = require('../models/index');
+
 
 const createTemplate = async (req, res) => {
     const {title, category, is_public} = req.body;
@@ -47,25 +50,41 @@ const getTemplateQuestions = async (req, res) => {
             order: [['position', 'ASC']]
         });
         res.status(200).json({message: "Fetched questions", questions});
-    }  catch (error) {
+    } catch (error) {
         console.log(error)
-        res.status(500).json({ message: "Server error", error: error.message });
+        res.status(500).json({message: "Server error", error: error.message});
     }
 }
 
 const getTemplateForms = async (req, res) => {
-    const { template_id } = req.params;
+    const {template_id} = req.params;
 
     try {
+        console.log(User.associations);
+        console.log(Form.associations);
         const forms = await Form.findAll({
-            where: { template_id },
-            include: { model: User, attributes: ['name', 'email'] }
+            where: {template_id},
+            include: [
+                {
+                    model: User,
+                    as: 'user',
+                    attributes: ['name', 'email']
+                },
+                {
+                    model: Answer,
+                    include: {
+                        model: Question,
+                        attributes: ['question_text']
+                    }
+                }
+            ]
         });
 
-        res.status(200).json({message: "Fetched forms:"}, forms);
+        res.status(200).json({ message: 'Fetched forms:', forms });
+
     } catch (error) {
         console.log(error);
-        res.status(500).json({ message: "Server error", error: error.message });
+        res.status(500).json({message: "Server error", error: error.message});
     }
 };
 

@@ -14,7 +14,7 @@ Template.hasMany(Form, { foreignKey: 'template_id' });
 Form.belongsTo(Template, { foreignKey: 'template_id' });
 
 User.hasMany(Form, { foreignKey: 'user_id' });
-Form.belongsTo(User, { foreignKey: 'user_id' });
+Form.belongsTo(User, { foreignKey: 'user_id', as: 'user' });
 
 Form.hasMany(Answer, { foreignKey: 'form_id' });
 Answer.belongsTo(Form, { foreignKey: 'form_id' });
