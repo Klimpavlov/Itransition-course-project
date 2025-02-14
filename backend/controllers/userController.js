@@ -25,7 +25,7 @@ const login = async (req, res) => {
     const {email, password} = req.body;
 
     // temporary solution
-    const JWT_SECRET = "4b8e1cda9d7f0a739b6a7e6c9bf7e6f14c8d0f5a90e6b3c4a9b4e8c9a6f5b2d3";
+    // const JWT_SECRET = "4b8e1cda9d7f0a739b6a7e6c9bf7e6f14c8d0f5a90e6b3c4a9b4e8c9a6f5b2d3";
 
     try {
         const user = await User.findOne({where: {email}});
@@ -42,7 +42,7 @@ const login = async (req, res) => {
             return res.status(400).json({message: "Invalid password"})
         }
 
-        const token = jwt.sign({id: user.id, isAdmin: user.isAdmin}, JWT_SECRET, {expiresIn: '1h'});
+        const token = jwt.sign({id: user.id, isAdmin: user.isAdmin}, process.env.JWT_SECRET, {expiresIn: '1h'});
         return res.json({message: "Success login", token});
     } catch (error) {
         console.log(error);
