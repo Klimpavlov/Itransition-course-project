@@ -1,6 +1,6 @@
 import apiClient from "@/app/api/apiClient/apiClient";
 
-const login = async(email, password) => {
+const login = async(email, password, setError) => {
     console.log(email, password)
     try {
         const response = await apiClient.post("/api/login", {
@@ -13,7 +13,9 @@ const login = async(email, password) => {
         localStorage.setItem("token", token);
     } catch (error) {
         console.log(error);
-        // console.log(error.response.data.error);
+        console.log(error.response.data.message);
+        const errorMessage = (error.response?.data?.message) || "Something went wrong";
+        setError(errorMessage);
     }
 }
 

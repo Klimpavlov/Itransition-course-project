@@ -28,15 +28,21 @@ export function LoginForm({
     const handleLogin = async (e) => {
         e.preventDefault();
         if (!email || !password) {
-            toast({
-                variant: "destructive",
+             toast({
                 title: "Please, fill all fields",
                 description: "There was a problem with your request.",
                 action: <ToastAction altText="Try again">Try again</ToastAction>,
             });
             return;
         }
-        await login(email, password);
+        await login(email, password, (error) => {
+            toast({
+                variant: "destructive",
+                title: error,
+                description: "There was a problem with your request.",
+                action: <ToastAction altText="Try again">Try again</ToastAction>,
+            });
+        });
 
     }
 

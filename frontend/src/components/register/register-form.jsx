@@ -15,6 +15,7 @@ import {useToast} from "@/hooks/use-toast";
 import {ToastAction} from "@/components/ui/toast"
 import register from "@/app/api/register/register";
 import Link from "next/link";
+import {useRouter} from "next/navigation";
 
 
 export function RegisterForm({
@@ -23,6 +24,7 @@ export function RegisterForm({
                              }) {
 
     const {toast} = useToast();
+    const router = useRouter();
 
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -31,16 +33,26 @@ export function RegisterForm({
         e.preventDefault();
         if (!name || !email || !password) {
             toast({
-                variant: "destructive",
                 title: "Please, fill all fields",
                 description: "There was a problem with your request.",
                 action: <ToastAction altText="Try again">Try again</ToastAction>,
             });
             return;
         }
-        await register(name, email, password);
-
+        await register(name, email, password, (error) => {
+            toast({
+                variant: "destructive",
+                title: error,
+                description: "There was a problem with your request.",
+                action: <ToastAction altText="Try again">Try again</ToastAction>,
+            });
+        }, successRedirect);
     }
+
+    const successRedirect = () => {
+        router.push("/login");
+    }
+
 
     return (
         (<div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -52,39 +64,39 @@ export function RegisterForm({
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
-                        <div className="flex flex-col gap-6">
-                            <div className="grid gap-2">
-                                <Label htmlFor="name">Name</Label>
-                                <Input id="name" type="name" placeholder="your name" required
-                                       onChange={(e) => setName(e.target.value)}/>
-                            </div>
-                            <div className="grid gap-2">
-                                <Label htmlFor="email">Email</Label>
-                                <Input id="email" type="email" placeholder="m@example.com" required
-                                       onChange={(e) => setEmail(e.target.value)}/>
-                            </div>
-                            <div className="grid gap-2">
-                                <div className="flex items-center">
-                                    <Label htmlFor="password">Password</Label>
-                                    {/*<a*/}
-                                    {/*  href="#"*/}
-                                    {/*  className="ml-auto inline-block text-sm underline-offset-4 hover:underline">*/}
-                                    {/*  Forgot your password?*/}
-                                    {/*</a>*/}
-                                </div>
-                                <Input id="password" type="password" required
-                                       onChange={(e) => setPassword(e.target.value)}/>
-                            </div>
-                            <Button className="w-full" onClick={handleRegister}>
-                                Register
-                            </Button>
+                    <div className="flex flex-col gap-6">
+                        <div className="grid gap-2">
+                            <Label htmlFor="name">Name</Label>
+                            <Input id="name" type="name" placeholder="your name" required
+                                   onChange={(e) => setName(e.target.value)}/>
                         </div>
-                        <div className="mt-4 text-center text-sm">
-                            Already have an account?{" "}
-                            <Link href="/login" className="underline underline-offset-4">
-                                Sign in
-                            </Link>
+                        <div className="grid gap-2">
+                            <Label htmlFor="email">Email</Label>
+                            <Input id="email" type="email" placeholder="m@example.com" required
+                                   onChange={(e) => setEmail(e.target.value)}/>
                         </div>
+                        <div className="grid gap-2">
+                            <div className="flex items-center">
+                                <Label htmlFor="password">Password</Label>
+                                {/*<a*/}
+                                {/*  href="#"*/}
+                                {/*  className="ml-auto inline-block text-sm underline-offset-4 hover:underline">*/}
+                                {/*  Forgot your password?*/}
+                                {/*</a>*/}
+                            </div>
+                            <Input id="password" type="password" required
+                                   onChange={(e) => setPassword(e.target.value)}/>
+                        </div>
+                        <Button className="w-full" onClick={handleRegister}>
+                            Register
+                        </Button>
+                    </div>
+                    <div className="mt-4 text-center text-sm">
+                        Already have an account?{" "}
+                        <Link href="/login" className="underline underline-offset-4">
+                            Sign in
+                        </Link>
+                    </div>
                 </CardContent>
             </Card>
         </div>)
