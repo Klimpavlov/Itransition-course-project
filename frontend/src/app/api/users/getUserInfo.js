@@ -3,7 +3,7 @@ import apiClient from "@/app/api/apiClient/apiClient";
 const getUserInfo = async (token) => {
     console.log(token);
     try {
-        const response = await apiClient.get("/api/me", {
+        const response = await apiClient.get("/api/users/current", {
             headers: {
                 Authorization: `Bearer ${token}`
             }

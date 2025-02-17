@@ -14,6 +14,7 @@ import {useState} from "react";
 import { useToast } from "@/hooks/use-toast"
 import { ToastAction } from "@/components/ui/toast"
 import Link from "next/link";
+import {useRouter} from "next/navigation";
 
 
 export function LoginForm({
@@ -22,6 +23,7 @@ export function LoginForm({
                           }) {
 
     const {toast} = useToast();
+    const router = useRouter();
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -42,8 +44,12 @@ export function LoginForm({
                 description: "There was a problem with your request.",
                 action: <ToastAction altText="Try again">Try again</ToastAction>,
             });
-        });
+        }, successRedirect);
 
+    }
+
+    const successRedirect = () => {
+        router.push("/")
     }
 
     return (
