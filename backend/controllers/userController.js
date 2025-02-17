@@ -61,6 +61,39 @@ const getUsers = async (req, res) => {
     }
 }
 
+const getCurrentUser = async (req, res) => {
+    try {
+        const currentUser = await User.findOne({
+            where: {id: req.user.id},
+            attributes: {exclude: ['password']}
+        });
+        if (!currentUser) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        console.log('Current user:', currentUser);
+        res.json(currentUser);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({message: "Server error"});
+    }
+}
+
+const getUserById = async (req, res) => {
+    const {id} = req.params;
+    try {
+        const user = await User.findOne({
+            where: {id},
+            attributes: {exclude: ['password']}
+        });
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        console.log(user);
+        res.status(200).json({message: "User:", user})
+    } catch (error) {
+        res.status(500).json({message: "Server error"});
+    }
+}
 const makeAdmin = async (req, res) => {
     const {id} = req.params;
     if (!req.user.isAdmin) {
@@ -130,4 +163,4 @@ const toggleBlockUser = async (req, res) => {
     }
 
 }
-module.exports = {register, login, getUsers, makeAdmin, removeAdmin, toggleBlockUser, deleteUser}
+module.exports = {register, login, getUsers, getCurrentUser, getUserById, makeAdmin, removeAdmin, toggleBlockUser, deleteUser}
