@@ -1,9 +1,8 @@
 import apiClient from "@/app/api/apiClient/apiClient";
 
-const getAllUsers = async (token) => {
-    console.log(token);
+const getAllTemplates = async(token) => {
     try {
-        const response = await apiClient.get("/api/users", {
+        const response = await apiClient.get("/api/templates", {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -15,4 +14,4 @@ const getAllUsers = async (token) => {
     }
 }
 
-export default getAllUsers;
+export default getAllTemplates;

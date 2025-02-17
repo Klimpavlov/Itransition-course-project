@@ -38,7 +38,30 @@ const getTemplates = async (req, res) => {
         res.status(200).json({message: "Fetched templates:", templates})
     } catch (error) {
         console.log(error);
-        res.status(500).json({message: "Server error"})
+        res.status(500).json({message: "Server error", error});
+    }
+}
+
+const getTemplateById = async (req,res) => {
+    const {id} = req.params;
+    try {
+        const template = await Template.findOne({
+            where: {id},
+            include: {
+                model: Question,
+                attributes: ['id', 'question_text', 'position']
+            }
+        });
+
+        if (!template) {
+            return res.status(404).json({ message: "Template not found" });
+        }
+
+        console.log(template);
+        res.status(200).json({message: "Fetched template:", template});
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({message: "Server error", error});
     }
 }
 
@@ -88,4 +111,4 @@ const getTemplateForms = async (req, res) => {
     }
 };
 
-module.exports = {createTemplate, getTemplates, getTemplateQuestions, getTemplateForms}
+module.exports = {createTemplate, getTemplates, getTemplateById, getTemplateQuestions, getTemplateForms}
