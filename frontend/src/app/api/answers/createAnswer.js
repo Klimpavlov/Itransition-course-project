@@ -1,10 +1,9 @@
 import apiClient from "@/app/api/apiClient/apiClient";
 
-const createAnswer = async (token, formId, questionId, answerText) => {
+const createAnswer = async (token, formId, answers) => {
     try {
         const response = await apiClient.post(`/api/forms/${formId}/answers`, {
-            question_id: questionId,
-            answerText: answerText
+            answers
         }, {
             headers: {
                 Authorization: `Bearer ${token}`

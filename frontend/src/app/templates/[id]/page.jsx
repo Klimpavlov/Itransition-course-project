@@ -11,9 +11,12 @@ import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
 import createForm from "@/app/api/forms/createForm";
 import createAnswer from "@/app/api/answers/createAnswer";
+import {useToast} from "@/hooks/use-toast";
+import {ToastAction} from "@/components/ui/toast";
 
 
 export default function TemplatePage() {
+    const {toast} = useToast();
     const token = localStorage.getItem("token");
     const {id} = useParams();
 
@@ -21,6 +24,7 @@ export default function TemplatePage() {
     const [questions, setQuestions] = useState([]);
     const [questionId, setQuestionId] = useState('');
     const [answerText,   setAnswerText] = useState('');
+    const [answers, setAnswers] = useState([]);
     const [formId, setFormId] = useState('');
 
     const fetchTemplate = async () => {
@@ -36,22 +40,54 @@ export default function TemplatePage() {
     }, [])
 
     const handleSubmitForm = async () => {
-        const formResponse = await createForm(token, id);
-        console.log("Form:", formResponse);
-        // setFormId(formResponse.data.form.id);
-        // if (formResponse) {
-        //     const answerResponse = await createAnswer(token, formId, questionId, )
-        // }
-    }
+        try {
+            const formResponse = await createForm(token, id);
+            console.log("Form created:", formResponse);
+
+            const formId = formResponse.data.form.id;
+            setFormId(formId);
+
+            if (answers.length === 0 || answers.some(a => !a.answerText.trim())) {
+                toast({
+                    title: "Please, fill all fields",
+                    description: "There was a problem with your request.",
+                    action: <ToastAction altText="Try again">Try again</ToastAction>,
+                });
+                return;
+            }
+
+            const answersResponse = await createAnswer(token, formId, answers);
+            console.log("Answers submitted:", answersResponse);
+        } catch (error) {
+            console.error("Error submitting form:", error);
+        }
+    };
+
+
+
+    const handleAnswerChange = (questionId, text) => {
+        setAnswers(prev => {
+            const updatedAnswers = [...prev];
+            const existingIndex = updatedAnswers.findIndex(a => a.question_id === questionId);
+
+            if (existingIndex !== -1) {
+                updatedAnswers[existingIndex].answerText = text;
+            } else {
+                updatedAnswers.push({ question_id: questionId, answerText: text });
+            }
+
+            return updatedAnswers;
+        });
+    };
 
     return (
         <SidebarProvider>
             <AppSidebar/>
-            <div className="">
+            <div className="w-full">
                 <main className="">
                     <SidebarTrigger/>
-                    <div className="w-full">
-                        <Card key={template.id} className="cursor-pointer">
+                    <div className="flex justify-center w-full">
+                        <Card key={template.id} className="w-full max-w-4xl mx-auto p-5 cursor-pointer">
                             <CardHeader>
                                 <CardTitle>{template.title}</CardTitle>
                                 <CardDescription>Author: </CardDescription>
@@ -59,17 +95,17 @@ export default function TemplatePage() {
                             </CardHeader>
                             <CardContent>
                                 {questions.map((question) => (
-                                    <div key={question.id} className="gap-2"
-                                         onChange={() => setQuestionId(question.id)}
-                                    >
-                                        <Label htmlFor="question">{question.question_text}</Label>
-                                        <Input id="question" type="question" placeholder="Enter response"
-                                               onChange={(e) => setAnswerText(e.target.value)}
-                                               required
+                                    <div key={question.id} className="gap-2">
+                                        <Label htmlFor={`question-${question.id}`}>{question.question_text}</Label>
+                                        <Input
+                                            id={`question-${question.id}`}
+                                            type="text"
+                                            placeholder="Enter response"
+                                            onChange={(e) => handleAnswerChange(question.id, e.target.value)}
+                                            required
                                         />
                                     </div>
-                                ))
-                                }
+                                ))}
                             </CardContent>
                             <CardFooter>
                                 <Button onClick={handleSubmitForm}>Submit form</Button>
