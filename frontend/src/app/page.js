@@ -42,10 +42,10 @@ export default function Home() {
     return (
         <SidebarProvider>
             <AppSidebar/>
-            <div className="">
+            <div className="w-full">
                 <main className="">
                     <SidebarTrigger/>
-                    <p>Templates</p>
+                    <p className='p-4 text-2xl font-bold'>Templates</p>
                     <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 p-4">
                     {templates.map((template) =>
                         (
@@ -60,7 +60,7 @@ export default function Home() {
                                             <p>Image will be there</p>
                                         </CardContent>
                                         <CardFooter>
-                                            <CardDescription>Author: </CardDescription>
+                                            <CardDescription>Author: {template.User.name}</CardDescription>
                                         </CardFooter>
                                     </Card>
                         )

@@ -1,11 +1,6 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-// const Template = require('../models/templateModel');
-// const User = require('../models/userModel');
-// const Form = require('../models/formModel');
-// const Question = require("../models/questionModel");
-// const Answer = require("../models/answerModel");
-const { User, Form, Answer, Question, Template } = require('../models/index');
+const {User, Form, Answer, Question, Template} = require('../models/index');
 
 
 const createTemplate = async (req, res) => {
@@ -33,7 +28,12 @@ const createTemplate = async (req, res) => {
 
 const getTemplates = async (req, res) => {
     try {
-        const templates = await Template.findAll();
+        const templates = await Template.findAll({
+            include: {
+                model: User,
+                attributes: ['name']
+            }
+        });
         console.log(templates);
         res.status(200).json({message: "Fetched templates:", templates})
     } catch (error) {
@@ -42,19 +42,24 @@ const getTemplates = async (req, res) => {
     }
 }
 
-const getTemplateById = async (req,res) => {
+const getTemplateById = async (req, res) => {
     const {id} = req.params;
     try {
         const template = await Template.findOne({
             where: {id},
-            include: {
-                model: Question,
-                attributes: ['id', 'question_text', 'position']
-            }
+            include: [
+                {
+                    model: Question,
+                    attributes: ['id', 'question_text', 'position'],
+                }, {
+                    model: User,
+                    attributes: ['name']
+                }
+            ]
         });
 
         if (!template) {
-            return res.status(404).json({ message: "Template not found" });
+            return res.status(404).json({message: "Template not found"});
         }
 
         console.log(template);
@@ -103,7 +108,7 @@ const getTemplateForms = async (req, res) => {
             ]
         });
 
-        res.status(200).json({ message: 'Fetched forms:', forms });
+        res.status(200).json({message: 'Fetched forms:', forms});
 
     } catch (error) {
         console.log(error);

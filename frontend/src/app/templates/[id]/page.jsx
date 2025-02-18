@@ -33,6 +33,7 @@ export default function TemplatePage() {
         console.log("Template:", response);
         setTemplate(response.data.template);
         setQuestions(response.data.template.Questions);
+        console.log(response.data.template.User.name);
     }
 
     useEffect(() => {
@@ -90,7 +91,7 @@ export default function TemplatePage() {
                         <Card key={template.id} className="w-full max-w-4xl mx-auto p-5 cursor-pointer">
                             <CardHeader>
                                 <CardTitle>{template.title}</CardTitle>
-                                <CardDescription>Author: </CardDescription>
+                                <CardDescription>Author: {template?.User?.name || "Unknown"}</CardDescription>
                                 <CardDescription>Category: {template.category}</CardDescription>
                             </CardHeader>
                             <CardContent>
