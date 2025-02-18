@@ -26,6 +26,18 @@ const createTemplate = async (req, res) => {
     }
 }
 
+const deleteTemplate = async (req, res) => {
+    const {id} = req.params;
+    try {
+        const template = await Template.findByPk(id);
+        await template.destroy();
+        res.status(200).json({message: "Template successfully deleted"});
+    }  catch (error) {
+        console.log(error);
+        res.status(500).json({message: "Server error", error});
+    }
+}
+
 const getTemplates = async (req, res) => {
     try {
         const templates = await Template.findAll({
@@ -116,4 +128,4 @@ const getTemplateForms = async (req, res) => {
     }
 };
 
-module.exports = {createTemplate, getTemplates, getTemplateById, getTemplateQuestions, getTemplateForms}
+module.exports = {createTemplate, deleteTemplate, getTemplates, getTemplateById, getTemplateQuestions, getTemplateForms}
