@@ -4,6 +4,6 @@ const authMiddleware = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
-router.post("/forms", authMiddleware, createForm);
+router.post("/forms/:template_id", authMiddleware, createForm);
 
 module.exports = router;

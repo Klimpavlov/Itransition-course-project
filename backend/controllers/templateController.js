@@ -58,7 +58,7 @@ const getTemplateById = async (req,res) => {
         }
 
         console.log(template);
-        res.status(200).json({message: "Fetched template:", template});
+        res.status(200).json({message: "Fetched templates:", template});
     } catch (error) {
         console.log(error);
         res.status(500).json({message: "Server error", error});

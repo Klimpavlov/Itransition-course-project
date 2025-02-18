@@ -7,11 +7,14 @@ import getUserInfo from "@/app/api/users/getUserInfo";
 import getAllTemplates from "@/app/api/templates/getTemplates";
 import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/components/ui/card";
 import getTemplateById from "@/app/api/templates/getTemplateById";
+import {useRouter} from 'next/navigation'
+
 
 export default function Home() {
     const token = localStorage.getItem("token");
+    const router = useRouter();
 
-    const [templates, setTemplates] = useState([])
+    const [templates, setTemplates] = useState([]);
     const getUser = async () => {
         await getUserInfo(token);
     }
@@ -27,9 +30,11 @@ export default function Home() {
         getTemplates();
     }, []);
 
-    const handleChooseTemplate = async () => {
-        const response = await getTemplateById(1, token);
+    const handleChooseTemplate = async (templateId) => {
+        console.log(templateId)
+        const response = await getTemplateById(templateId, token);
         console.log("Template:", response);
+        router.push(`/templates/${templateId}`);
     }
 
     console.log(templates);
@@ -40,10 +45,13 @@ export default function Home() {
             <div className="">
                 <main className="">
                     <SidebarTrigger/>
+                    <p>Templates</p>
                     <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 p-4">
                     {templates.map((template) =>
                         (
-                                    <Card key={template.id} onclick={}>
+                                    <Card key={template.id} className="cursor-pointer"
+                                          onClick={() => handleChooseTemplate(template.id)}
+                                    >
                                         <CardHeader>
                                             <CardTitle>{template.title}</CardTitle>
                                             <CardDescription>Category: {template.category}</CardDescription>

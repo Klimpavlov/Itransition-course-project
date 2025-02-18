@@ -16,7 +16,6 @@ import { ToastAction } from "@/components/ui/toast"
 import Link from "next/link";
 import {useRouter} from "next/navigation";
 
-
 export function LoginForm({
                               className,
                               ...props
@@ -49,7 +48,7 @@ export function LoginForm({
     }
 
     const successRedirect = () => {
-        router.push("/")
+        router.push("/");
     }
 
     return (

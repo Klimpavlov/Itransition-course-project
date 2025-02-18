@@ -1,8 +1,10 @@
 import apiClient from "@/app/api/apiClient/apiClient";
 
-const getTemplateById = async (templateId, token) => {
+const createForm = async (token, templateId) => {
     try {
-        const response = await apiClient.get(`/api/templates/${templateId}`, {
+        const response = await apiClient.post(`/api/forms/${templateId}`, {
+
+        },{
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -10,8 +12,8 @@ const getTemplateById = async (templateId, token) => {
         console.log(response);
         return response;
     } catch (error) {
-        console.log(error);
+        console.log(error)
     }
 }
 
-export default getTemplateById;
+export default createForm;
