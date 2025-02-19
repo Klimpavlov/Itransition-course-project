@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/userModel');
+const {Template} = require("../models");
 
 const register = async (req, res) => {
     const {name, email, password} = req.body;
@@ -65,7 +66,11 @@ const getCurrentUser = async (req, res) => {
     try {
         const currentUser = await User.findOne({
             where: {id: req.user.id},
-            attributes: {exclude: ['password']}
+            attributes: {exclude: ['password']},
+            include: {
+                model: Template,
+                attributes: ['id', 'user_id', 'title', 'category', 'is_public']
+            }
         });
         if (!currentUser) {
             return res.status(404).json({ message: "User not found" });

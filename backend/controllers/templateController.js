@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const {User, Form, Answer, Question, Template} = require('../models/index');
+const { Op } = require('sequelize')
 
 
 const createTemplate = async (req, res) => {
@@ -22,7 +23,7 @@ const createTemplate = async (req, res) => {
         res.status(200).json({message: "Template is created", template})
     } catch (error) {
         console.log(error);
-        res.status(500).json({message: "Server error"}, error.message);
+        res.status(500).json({message: "Server error"}, error);
     }
 }
 
@@ -40,7 +41,11 @@ const deleteTemplate = async (req, res) => {
 
 const getTemplates = async (req, res) => {
     try {
+        const userId = req.user.id;
         const templates = await Template.findAll({
+            where: {
+                user_id: {[Op.ne]: userId}
+            },
             include: {
                 model: User,
                 attributes: ['name']
