@@ -69,8 +69,9 @@ const getCurrentUser = async (req, res) => {
             attributes: {exclude: ['password']},
             include: {
                 model: Template,
-                attributes: ['id', 'user_id', 'title', 'category', 'is_public']
-            }
+                attributes: ['id', 'user_id', 'title', 'category', 'is_public'],
+            },
+            order: [[Template, 'id', 'DESC']]
         });
         if (!currentUser) {
             return res.status(404).json({ message: "User not found" });

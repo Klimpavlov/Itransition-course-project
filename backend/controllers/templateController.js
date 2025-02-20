@@ -39,6 +39,32 @@ const deleteTemplate = async (req, res) => {
     }
 }
 
+const editTemplate = async (req, res) => {
+    const {title, category, is_public} = req.body;
+    const user_id = req.user.id;
+
+    if (!title) {
+        console.log("Title is required");
+        return res.status(400).json({message: "Title is required"});
+    }
+
+    try {
+        const template = await Template.update({
+            title,
+            category,
+            is_public,
+            // user_id: req.user.id
+        }, {
+            where: {user_id}
+        });
+        console.log("Template is updated", template);
+        res.status(200).json({message: "Template is updated", template})
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({message: "Server error"}, error);
+    }
+}
+
 const getTemplates = async (req, res) => {
     try {
         const userId = req.user.id;
@@ -49,7 +75,8 @@ const getTemplates = async (req, res) => {
             include: {
                 model: User,
                 attributes: ['name']
-            }
+            },
+            order: [['id', 'DESC']]
         });
         console.log(templates);
         res.status(200).json({message: "Fetched templates:", templates})
@@ -133,4 +160,4 @@ const getTemplateForms = async (req, res) => {
     }
 };
 
-module.exports = {createTemplate, deleteTemplate, getTemplates, getTemplateById, getTemplateQuestions, getTemplateForms}
+module.exports = {createTemplate, deleteTemplate, editTemplate, getTemplates, getTemplateById, getTemplateQuestions, getTemplateForms}
