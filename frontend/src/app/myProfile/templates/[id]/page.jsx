@@ -49,7 +49,11 @@ export default function MyTemplatePage() {
             <div className="w-full">
                 <main className="">
                     <SidebarTrigger/>
-                    <div className="flex justify-center w-full">
+                    <div className='flex justify-between'>
+                        <p className="p-4 text-2xl font-bold">Template</p>
+                        <Button className='m-4' onClick={handleDeleteTemplate}>Delete template</Button>
+                    </div>
+                    <div className="p-4 w-full">
                         <Card key={template.id} className="w-full max-w-4xl mx-auto p-5 cursor-pointer">
                             <CardHeader>
                                 <CardTitle>{template.title}</CardTitle>
@@ -73,7 +77,6 @@ export default function MyTemplatePage() {
                                 <Button>Submit form</Button>
                             </CardFooter>
                         </Card>
-                        <Button className='mx-4' onClick={handleDeleteTemplate}>Delete template</Button>
                     </div>
                 </main>
             </div>
