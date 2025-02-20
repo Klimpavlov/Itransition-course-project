@@ -20,6 +20,7 @@ import createQuestions from "@/app/api/questions/createQuestions";
 import createTemplate from "@/app/api/templates/createTemplate";
 import {useToast} from "@/hooks/use-toast";
 import {useRouter} from "next/navigation";
+import {ModeToggle} from "@/components/theme/toggle-theme/modeToggle";
 
 export default function CreateTemplatePage() {
     const {toast} = useToast();
@@ -93,7 +94,10 @@ export default function CreateTemplatePage() {
             <AppSidebar/>
             <div className="w-full">
                 <main>
-                    <SidebarTrigger />
+                    <div className="flex justify-between m-2">
+                        <SidebarTrigger/>
+                        <ModeToggle/>
+                    </div>
                     <div className='flex justify-between'>
                         <p className="p-4 text-2xl font-bold">Create template</p>
                         <Button className='m-4' onClick={()=>router.push("/myProfile")}>Back</Button>

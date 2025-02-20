@@ -10,6 +10,7 @@ import {Label} from "@/components/ui/label";
 import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
 import deleteTemplate from "@/app/api/templates/deleteTemplate";
+import {ModeToggle} from "@/components/theme/toggle-theme/modeToggle";
 
 
 export default function MyTemplatePage() {
@@ -48,7 +49,10 @@ export default function MyTemplatePage() {
             <AppSidebar/>
             <div className="w-full">
                 <main className="">
-                    <SidebarTrigger/>
+                    <div className="flex justify-between m-2">
+                        <SidebarTrigger/>
+                        <ModeToggle/>
+                    </div>
                     <div className='flex justify-between'>
                         <p className="p-4 text-2xl font-bold">Template</p>
                         <div>

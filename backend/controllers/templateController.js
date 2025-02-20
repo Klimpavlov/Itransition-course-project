@@ -53,7 +53,6 @@ const editTemplate = async (req, res) => {
             title,
             category,
             is_public,
-            // user_id: req.user.id
         }, {
             where: {user_id}
         });

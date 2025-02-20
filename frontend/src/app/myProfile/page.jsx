@@ -9,6 +9,7 @@ import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} f
 import getTemplateById from "@/app/api/templates/getTemplateById";
 import {useRouter} from 'next/navigation'
 import {Button} from "@/components/ui/button";
+import {ModeToggle} from "@/components/theme/toggle-theme/modeToggle";
 
 
 export default function MyProfile() {
@@ -42,7 +43,10 @@ export default function MyProfile() {
             <AppSidebar/>
             <div className="w-full">
                 <main className="">
-                    <SidebarTrigger/>
+                    <div className="flex justify-between m-2">
+                        <SidebarTrigger/>
+                        <ModeToggle/>
+                    </div>
                     <div className='flex justify-between'>
                         <p className='p-4 text-2xl font-bold'>My templates</p>
                         <Button className='m-4'

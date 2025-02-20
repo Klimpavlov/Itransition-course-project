@@ -13,6 +13,7 @@ import createForm from "@/app/api/forms/createForm";
 import createAnswer from "@/app/api/answers/createAnswer";
 import {useToast} from "@/hooks/use-toast";
 import {ToastAction} from "@/components/ui/toast";
+import {ModeToggle} from "@/components/theme/toggle-theme/modeToggle";
 
 
 export default function TemplatePage() {
@@ -86,7 +87,10 @@ export default function TemplatePage() {
             <AppSidebar/>
             <div className="w-full">
                 <main className="">
-                    <SidebarTrigger/>
+                    <div className="flex justify-between m-2">
+                        <SidebarTrigger/>
+                        <ModeToggle/>
+                    </div>
                     <div className="flex justify-center w-full">
                         <Card key={template.id} className="w-full max-w-4xl mx-auto p-5 cursor-pointer">
                             <CardHeader>

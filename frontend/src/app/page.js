@@ -8,6 +8,7 @@ import getAllTemplates from "@/app/api/templates/getTemplates";
 import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/components/ui/card";
 import getTemplateById from "@/app/api/templates/getTemplateById";
 import {useRouter} from 'next/navigation'
+import {ModeToggle} from "@/components/theme/toggle-theme/modeToggle";
 
 
 export default function Home() {
@@ -44,7 +45,10 @@ export default function Home() {
             <AppSidebar/>
             <div className="w-full">
                 <main className="">
-                    <SidebarTrigger/>
+                    <div className="flex justify-between m-2">
+                        <SidebarTrigger/>
+                        <ModeToggle/>
+                    </div>
                     <p className='p-4 text-2xl font-bold'>Templates</p>
                     <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 p-4">
                     {templates.map((template) =>
