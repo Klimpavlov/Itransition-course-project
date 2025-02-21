@@ -42,6 +42,7 @@ const deleteTemplate = async (req, res) => {
 const editTemplate = async (req, res) => {
     const {title, category, is_public} = req.body;
     const user_id = req.user.id;
+    const {id} = req.params;
 
     if (!title) {
         console.log("Title is required");
@@ -54,7 +55,10 @@ const editTemplate = async (req, res) => {
             category,
             is_public,
         }, {
-            where: {user_id}
+            where: {
+                id,
+                user_id
+            }
         });
         console.log("Template is updated", template);
         res.status(200).json({message: "Template is updated", template})
