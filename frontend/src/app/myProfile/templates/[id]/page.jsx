@@ -22,6 +22,7 @@ import {
     SelectValue
 } from "@/components/ui/select";
 import updateQuestions from "@/app/api/questions/updateQuestions";
+import deleteQuestion from "@/app/api/questions/deleteQuestion";
 
 
 export default function MyTemplatePage() {
@@ -57,6 +58,7 @@ export default function MyTemplatePage() {
         await deleteTemplate(token, id, () => router.push("/myProfile"));
     };
 
+    // update template
     const handleUpdateTemplate = async () => {
         const updatedData = {
             title: templateTitle,
@@ -68,9 +70,9 @@ export default function MyTemplatePage() {
         console.log("Updated template:", response);
 
         setTemplate({...template, ...updatedData});
-    };
 
-    const handleUpdateQuestions = async () => {
+        // update questions
+
         console.log(questions);
         const updatedQuestions = questions.map((question) => (
             {
@@ -82,19 +84,15 @@ export default function MyTemplatePage() {
                 position: 1
             }
         ))
+        const questionsResponse = await updateQuestions(token, updatedQuestions);
+        console.log(questionsResponse);
+    }
 
-        // = [{
-        // id: 16,
-        // question_text: "try edit question 16?",
-        // type: "text",
-        // description: "",
-        // show_in_results: true,
-        // position: 1
-        // }];
-
-        const response = await updateQuestions(token, updatedQuestions);
+    const handleDeleteQuestion = async (id) => {
+        const response = await deleteQuestion(token, id);
         console.log(response);
     }
+
 
     return (
         <SidebarProvider>
@@ -157,20 +155,33 @@ export default function MyTemplatePage() {
                                 <CardContent>
                                     <CardDescription>
                                         Questions:
-                                        {questions.map((question) => (
-                                            <div key={question.id} className="">
+                                        {questions.map((question, index) => (
+                                            <div key={question.id} className="mt-2 flex justify-between">
                                                 <Input
-                                                    value={questionText.question_text}
-                                                    onChange={(e) => setQuestionText(e.target.value)}
+                                                    value={question.question_text}
+                                                    onChange={(e) => {
+                                                        const updatedQuestions = [...questions];
+                                                        updatedQuestions[index] = {
+                                                            ...question,
+                                                            question_text: e.target.value
+                                                        };
+                                                        setQuestions(updatedQuestions);
+                                                    }}
                                                 />
+                                                <Button className='ml-5'
+                                                        onClick={() => handleDeleteQuestion(question.id)}>
+                                                    Delete
+                                                    question
+                                                </Button>
                                             </div>
                                         ))}
                                     </CardDescription>
                                 </CardContent>
                                 <CardFooter>
-                                    <Button className="" onClick={handleUpdateTemplate}>Save changes</Button>
-                                    <Button className="" onClick={handleUpdateQuestions}>TEST REQUEST UPDATE
-                                        QUESTIONS</Button>
+                                    <Button variant='secondary' className="" onClick={handleUpdateTemplate}>Save
+                                        changes</Button>
+                                    {/*<Button className="" onClick={handleUpdateQuestions}>TEST REQUEST UPDATE*/}
+                                    {/*    QUESTIONS</Button>*/}
                                 </CardFooter>
                             </Card>
                         )}
