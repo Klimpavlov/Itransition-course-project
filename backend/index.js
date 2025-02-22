@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+const bodyParser = require('body-parser');
 const db = require('./models/index');
 const sequelize = require('./config/db');
 const User = require('./models/userModel');
@@ -15,8 +16,10 @@ const formRoutes = require('./routes/formRoutes');
 const answerRoutes = require('./routes/answerRoutes');
 const app = express();
 
-app.use(cors({ origin: '*' }));
-app.use(express.json());
+app.use(cors());
+app.use(bodyParser.json());
+
+// app.use(express.json());
 app.use('/api', userRoutes, templateRoutes, questionRoutes, formRoutes, answerRoutes);
 
 const PORT = process.env.PORT || 3001;
