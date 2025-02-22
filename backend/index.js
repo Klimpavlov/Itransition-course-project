@@ -1,13 +1,10 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const bodyParser = require('body-parser');
 const db = require('./models/index');
 const sequelize = require('./config/db');
 const User = require('./models/userModel');
 const bcrypt = require('bcryptjs');
-
-
 
 const userRoutes = require('./routes/userRoutes');
 const templateRoutes = require('./routes/templateRoutes');
@@ -15,9 +12,8 @@ const questionRoutes = require('./routes/questionRoutes');
 const formRoutes = require('./routes/formRoutes');
 const answerRoutes = require('./routes/answerRoutes');
 const app = express();
-
+app.use(express.json());
 app.use(cors());
-app.use(bodyParser.json());
 
 // app.use(express.json());
 app.use('/api', userRoutes, templateRoutes, questionRoutes, formRoutes, answerRoutes);
