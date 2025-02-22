@@ -9,10 +9,12 @@ import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} f
 import getTemplateById from "@/app/api/templates/getTemplateById";
 import {useRouter} from 'next/navigation'
 import {ModeToggle} from "@/components/theme/toggle-theme/modeToggle";
+import Cookie from "js-cookie";
 
 
 export default function Home() {
-    const token = localStorage.getItem("token");
+    // const token = localStorage.getItem("token");
+    const token = Cookie.get("token");
     const router = useRouter();
 
     const [templates, setTemplates] = useState([]);

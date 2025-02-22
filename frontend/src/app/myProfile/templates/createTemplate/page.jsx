@@ -21,11 +21,13 @@ import createTemplate from "@/app/api/templates/createTemplate";
 import {useToast} from "@/hooks/use-toast";
 import {useRouter} from "next/navigation";
 import {ModeToggle} from "@/components/theme/toggle-theme/modeToggle";
+import Cookie from "js-cookie";
 
 export default function CreateTemplatePage() {
     const {toast} = useToast();
     const router = useRouter();
-    const token = localStorage.getItem("token");
+    // const token = localStorage.getItem("token");
+    const token = Cookie.get("token");
     const [title, setTitle] = useState("");
     const [category, setCategory] = useState("");
     const [isPublic, setIsPublic] = useState(null);

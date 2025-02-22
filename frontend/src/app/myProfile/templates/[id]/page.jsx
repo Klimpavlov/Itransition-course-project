@@ -26,10 +26,12 @@ import deleteQuestion from "@/app/api/questions/deleteQuestion";
 import createQuestions from "@/app/api/questions/createQuestions";
 import {ToastAction} from "@/components/ui/toast";
 import {useToast} from "@/hooks/use-toast";
+import Cookie from "js-cookie";
 
 
 export default function MyTemplatePage() {
-    const token = localStorage.getItem("token");
+    // const token = localStorage.getItem("token");
+    const token = Cookie.get("token");
     const {id} = useParams();
     const router = useRouter();
     const {toast} = useToast();

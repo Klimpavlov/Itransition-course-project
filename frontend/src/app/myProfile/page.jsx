@@ -10,10 +10,12 @@ import getTemplateById from "@/app/api/templates/getTemplateById";
 import {useRouter} from 'next/navigation'
 import {Button} from "@/components/ui/button";
 import {ModeToggle} from "@/components/theme/toggle-theme/modeToggle";
+import Cookie from "js-cookie";
 
 
 export default function MyProfile() {
-    const token = localStorage.getItem("token");
+    // const token = localStorage.getItem("token");
+    const token = Cookie.get("token");
     const router = useRouter();
 
     const [myTemplates, setMyTemplates] = useState([]);

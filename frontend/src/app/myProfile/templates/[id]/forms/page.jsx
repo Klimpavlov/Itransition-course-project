@@ -11,10 +11,12 @@ import {useParams, useRouter} from 'next/navigation'
 import {Button} from "@/components/ui/button";
 import {ModeToggle} from "@/components/theme/toggle-theme/modeToggle";
 import getTemplateForms from "@/app/api/forms/getTemplateForms";
+import Cookie from "js-cookie";
 
 
 export default function templateForms() {
-    const token = localStorage.getItem("token");
+    // const token = localStorage.getItem("token");
+    const token = Cookie.get("token");
     const {id} = useParams();
     const router = useRouter();
 

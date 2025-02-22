@@ -14,11 +14,13 @@ import createAnswer from "@/app/api/answers/createAnswer";
 import {useToast} from "@/hooks/use-toast";
 import {ToastAction} from "@/components/ui/toast";
 import {ModeToggle} from "@/components/theme/toggle-theme/modeToggle";
+import Cookie from "js-cookie";
 
 
 export default function TemplatePage() {
     const {toast} = useToast();
-    const token = localStorage.getItem("token");
+    // const token = localStorage.getItem("token");
+    const token = Cookie.get("token");
     const {id} = useParams();
 
     const [template, setTemplate] = useState([]);
