@@ -23,12 +23,16 @@ import {
 } from "@/components/ui/select";
 import updateQuestions from "@/app/api/questions/updateQuestions";
 import deleteQuestion from "@/app/api/questions/deleteQuestion";
+import createQuestions from "@/app/api/questions/createQuestions";
+import {ToastAction} from "@/components/ui/toast";
+import {useToast} from "@/hooks/use-toast";
 
 
 export default function MyTemplatePage() {
     const token = localStorage.getItem("token");
     const {id} = useParams();
     const router = useRouter();
+    const {toast} = useToast();
 
     const [template, setTemplate] = useState(null);
     const [questions, setQuestions] = useState([]);
@@ -36,7 +40,9 @@ export default function MyTemplatePage() {
     const [templateCategory, setTemplateCategory] = useState('');
     const [isPublic, setIsPublic] = useState(null);
 
-    const [questionText, setQuestionText] = useState('')
+    const [questionText, setQuestionText] = useState('');
+    const [addedQuestions, setAddedQuestions] = useState([]);
+
 
     useEffect(() => {
         const fetchTemplate = async () => {
@@ -66,27 +72,75 @@ export default function MyTemplatePage() {
             is_public: isPublic
         };
 
-        const response = await editTemplate(token, id, templateTitle, templateCategory, isPublic);
-        console.log("Updated template:", response);
+        if (!templateTitle || !templateCategory || isPublic === null || addedQuestions?.some(q => q.trim() === "")) {
+            toast({
+                title: "Please, fill all fields",
+                description: "There was a problem with your request.",
+                action: <ToastAction altText="Try again">Try again</ToastAction>,
+            });
+            console.log("Please, fill all fields");
+            return;
+        }
 
-        setTemplate({...template, ...updatedData});
+        try {
 
-        // update questions
+            const response = await editTemplate(token, id, templateTitle, templateCategory, isPublic);
+            console.log("Updated template:", response);
 
-        console.log(questions);
-        const updatedQuestions = questions.map((question) => (
-            {
-                id: question.id,
-                question_text: questionText || question.question_text,
-                type: "text",
-                description: "",
-                show_in_results: true,
-                position: 1
-            }
-        ))
-        const questionsResponse = await updateQuestions(token, updatedQuestions);
-        console.log(questionsResponse);
+            setTemplate({...template, ...updatedData});
+
+            // update questions
+
+            console.log(questions);
+            const updatedQuestions = questions.map((question) => (
+                {
+                    id: question.id,
+                    question_text: questionText || question.question_text,
+                    type: "text",
+                    description: "",
+                    show_in_results: true,
+                    position: 1
+                }
+            ))
+            const questionsResponse = await updateQuestions(token, updatedQuestions);
+            console.log(questionsResponse);
+
+            // add new questions
+
+            const newQuestions = addedQuestions.map((question) => (
+                {
+                    question_text: question,
+                    type: "text",
+                    description: "",
+                    show_in_results: true,
+                    position: 1
+                }
+            ));
+
+            const addedQuestionsResponse = await createQuestions(token, id, newQuestions);
+            console.log(addedQuestionsResponse);
+        } catch (error) {
+            console.error("error while editing template and questions", error);
+        }
     }
+
+
+
+    // add questions
+
+    const addQuestion = () => {
+        if (addedQuestions.length === 0 || addedQuestions[addedQuestions.length - 1].trim() === "") {
+            setAddedQuestions([...addedQuestions, ""]);
+        }
+    };
+
+    const fillQuestion = (index, value) => {
+        const updatedQuestions = [...addedQuestions];
+        updatedQuestions[index] = value;
+        setAddedQuestions(updatedQuestions);
+    };
+
+    // delete questions
 
     const handleDeleteQuestion = async (id) => {
         const response = await deleteQuestion(token, id);
@@ -106,6 +160,7 @@ export default function MyTemplatePage() {
                     <div className="flex justify-between">
                         <p className="p-4 text-2xl font-bold">Template</p>
                         <div>
+                            <Button variant='secondary' className="m-4" onClick={() => router.push(`/myProfile/templates/${id}/forms`)}>Show forms</Button>
                             <Button className="m-4" onClick={handleDeleteTemplate}>Delete template</Button>
                         </div>
                     </div>
@@ -175,13 +230,31 @@ export default function MyTemplatePage() {
                                                 </Button>
                                             </div>
                                         ))}
+                                        <div className='mt-2'>
+                                            <CardDescription>Add questions:</CardDescription>
+                                            {addedQuestions.map((question, index) => (
+                                                <Input
+                                                    key={index}
+                                                    className="w-full mt-2"
+                                                    placeholder="Enter question text"
+                                                    value={question}
+                                                    onChange={(e) => fillQuestion(index, e.target.value)}
+                                                />
+                                            ))}
+                                            <Button
+                                                variant="outline"
+                                                onClick={addQuestion}
+                                                className="mt-3"
+                                                disabled={addedQuestions.length > 0 && addedQuestions[addedQuestions.length - 1].trim() === ""}
+                                            >
+                                                Add question
+                                            </Button>
+                                        </div>
                                     </CardDescription>
                                 </CardContent>
                                 <CardFooter>
                                     <Button variant='secondary' className="" onClick={handleUpdateTemplate}>Save
                                         changes</Button>
-                                    {/*<Button className="" onClick={handleUpdateQuestions}>TEST REQUEST UPDATE*/}
-                                    {/*    QUESTIONS</Button>*/}
                                 </CardFooter>
                             </Card>
                         )}

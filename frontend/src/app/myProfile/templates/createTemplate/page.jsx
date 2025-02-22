@@ -36,7 +36,7 @@ export default function CreateTemplatePage() {
         setQuestions([...questions, ""]);
     };
 
-    const updateQuestion = (index, value) => {
+    const fillQuestion = (index, value) => {
         const updatedQuestions = [...questions];
         updatedQuestions[index] = value;
         setQuestions(updatedQuestions);
@@ -148,7 +148,7 @@ export default function CreateTemplatePage() {
                                         className="w-full mt-2"
                                         placeholder="Enter question text"
                                         value={question}
-                                        onChange={(e) => updateQuestion(index, e.target.value)}
+                                        onChange={(e) => fillQuestion(index, e.target.value)}
                                     />
                                 ))}
                                 <Button variant="outline" onClick={addQuestion} className="mt-3">
