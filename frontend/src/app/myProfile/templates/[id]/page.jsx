@@ -121,6 +121,7 @@ export default function MyTemplatePage() {
 
             const addedQuestionsResponse = await createQuestions(token, id, newQuestions);
             console.log(addedQuestionsResponse);
+            router.push("/myProfile");
         } catch (error) {
             console.error("error while editing template and questions", error);
         }

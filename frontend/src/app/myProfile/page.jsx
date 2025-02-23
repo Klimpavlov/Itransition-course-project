@@ -50,7 +50,7 @@ export default function MyProfile() {
                         <ModeToggle/>
                     </div>
                     <div className='flex justify-between'>
-                        <p className='p-4 text-2xl font-bold'>My templates</p>
+                        <p className='p-4 text-2xl font-bold'>My templates: {myTemplates.length}</p>
                         <Button className='m-4'
                                 onClick={() => router.push("/myProfile/templates/createTemplate")}
                         >

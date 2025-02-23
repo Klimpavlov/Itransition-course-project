@@ -83,6 +83,9 @@ export default function CreateTemplatePage() {
                 console.log(questionsResponse);
             }
         } catch (error) {
+            if (error.response && error.response.status === 401) {
+                window.location.href = '/login';
+            }
             console.error("error while creating template and questions", error);
         }
     };

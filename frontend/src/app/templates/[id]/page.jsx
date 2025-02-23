@@ -3,7 +3,7 @@
 import {SidebarProvider, SidebarTrigger} from "@/components/ui/sidebar";
 import {AppSidebar} from "@/components/sidebar/app-sidebar";
 import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/components/ui/card";
-import {useParams} from "next/navigation";
+import {useParams, useRouter} from "next/navigation";
 import getTemplateById from "@/app/api/templates/getTemplateById";
 import {useEffect, useState} from "react";
 import {Label} from "@/components/ui/label";
@@ -19,6 +19,7 @@ import Cookie from "js-cookie";
 
 export default function TemplatePage() {
     const {toast} = useToast();
+    const router = useRouter();
     // const token = localStorage.getItem("token");
     const token = Cookie.get("token");
     const {id} = useParams();
@@ -45,13 +46,7 @@ export default function TemplatePage() {
 
     const handleSubmitForm = async () => {
         try {
-            const formResponse = await createForm(token, id);
-            console.log("Form created:", formResponse);
-
-            const formId = formResponse.data.form.id;
-            setFormId(formId);
-
-            if (answers.length === 0 || answers.some(a => !a.answerText.trim())) {
+            if (answers.length === 0 || answers.some(a => !a.answerText || !a.answerText.trim())) {
                 toast({
                     title: "Please, fill all fields",
                     description: "There was a problem with your request.",
@@ -60,8 +55,15 @@ export default function TemplatePage() {
                 return;
             }
 
+            const formResponse = await createForm(token, id);
+            console.log("Form created:", formResponse);
+
+            const formId = formResponse.data.form.id;
+            setFormId(formId);
+
             const answersResponse = await createAnswer(token, formId, answers);
             console.log("Answers submitted:", answersResponse);
+            router.push("/");
         } catch (error) {
             console.error("Error submitting form:", error);
         }
