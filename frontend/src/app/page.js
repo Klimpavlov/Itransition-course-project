@@ -63,7 +63,6 @@ export default function Home() {
                                             <CardDescription>Category: {template.category}</CardDescription>
                                         </CardHeader>
                                         <CardContent>
-                                            <p>Image will be there</p>
                                         </CardContent>
                                         <CardFooter>
                                             <CardDescription>Author: {template.User.name}</CardDescription>

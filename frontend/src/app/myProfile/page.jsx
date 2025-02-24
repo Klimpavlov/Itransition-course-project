@@ -68,7 +68,6 @@ export default function MyProfile() {
                                         <CardDescription>Category: {template.category}</CardDescription>
                                     </CardHeader>
                                     <CardContent>
-                                        <p>Image will be there</p>
                                     </CardContent>
                                     <CardFooter>
                                         <CardDescription>Author: {userInfo.name}</CardDescription>

@@ -121,7 +121,6 @@ export default function TemplatePage() {
                             </CardFooter>
                         </Card>
                     </div>
-
                 </main>
             </div>
         </SidebarProvider>
