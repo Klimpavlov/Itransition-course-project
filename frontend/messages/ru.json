@@ -1,0 +1,31 @@
+{
+  "Login": {
+    "error": "ошибка",
+    "Login": "Войти",
+    "LoginText": "Введите электронную почту для входа",
+    "Email": "Электронная почта",
+    "Password": "Пароль",
+    "placeholderPassword": "Ваш пароль",
+    "SignUp": "Зарегистрироваться",
+    "footerMessage": "Нет аккаунта?"
+  },
+  "Register": {
+    "error": "ошибка",
+    "Register": "Регистрация",
+    "RegisterText": "Введите электронную почту для создания аккаунта",
+    "Name": "Имя",
+    "placeholderName": "Ваше имя",
+    "Email": "Электронная почта",
+    "Password": "Пароль",
+    "placeholderPassword": "Ваш пароль",
+    "SignIn": "Войти",
+    "footerMessage": "Уже есть аккаунт?"
+  },
+  "MainPage": {
+    "Templates": "Шаблоны"
+  },
+  "MyProfile": {
+    "MyTemplates": "Мои шаблоны",
+    "CreateTemplate": "Создать шаблон"
+  }
+}

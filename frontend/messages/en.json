@@ -1,0 +1,31 @@
+{
+  "Login": {
+    "error": "error",
+    "Login": "Login",
+    "LoginText": "Enter your email below to login to your account",
+    "Email": "Email",
+    "Password": "Password",
+    "placeholderPassword": "Your password",
+    "SignUp": "Sign up",
+    "footerMessage": "Don't have an account?"
+  },
+  "Register": {
+      "error": "error",
+      "Register": "Register",
+      "RegisterText": "Enter your email below to create account",
+      "Name": "Name",
+      "placeholderName": "Your name",
+      "Email": "Email",
+      "Password": "Password",
+      "placeholderPassword": "Your password",
+      "SignIn": "Sign in",
+      "footerMessage": "Already have an account??"
+  },
+  "MainPage": {
+    "Templates" : "Templates"
+  },
+  "MyProfile": {
+    "MyTemplates": "My templates",
+    "CreateTemplate": "Create template"
+  }
+}

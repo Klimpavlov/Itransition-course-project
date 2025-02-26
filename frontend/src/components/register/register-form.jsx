@@ -9,13 +9,14 @@ import {
 } from "@/components/ui/card"
 import {Input} from "@/components/ui/input"
 import {Label} from "@/components/ui/label"
-import login from "@/app/api/login/login";
+import login from "@/app/[locale]/api/login/login";
 import {useState} from "react";
 import {useToast} from "@/hooks/use-toast";
 import {ToastAction} from "@/components/ui/toast"
-import register from "@/app/api/register/register";
+import register from "@/app/[locale]/api/register/register";
 import Link from "next/link";
 import {useRouter} from "next/navigation";
+import {useTranslations} from "next-intl";
 
 
 export function RegisterForm({
@@ -53,48 +54,49 @@ export function RegisterForm({
         router.push("/login");
     }
 
+    const t = useTranslations("Register");
 
     return (
         (<div className={cn("flex flex-col gap-6", className)} {...props}>
             <Card>
                 <CardHeader>
-                    <CardTitle className="text-2xl">Register</CardTitle>
+                    <CardTitle className="text-2xl">{t("Register")}</CardTitle>
                     <CardDescription>
-                        Enter your email below to create account
+                        {t("RegisterText")}
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
                     <div className="flex flex-col gap-6">
                         <div className="grid gap-2">
-                            <Label htmlFor="name">Name</Label>
-                            <Input id="name" type="name" placeholder="Your name" required
+                            <Label htmlFor="name">{t("Name")}</Label>
+                            <Input id="name" type="name" placeholder={t("placeholderName")} required
                                    onChange={(e) => setName(e.target.value)}/>
                         </div>
                         <div className="grid gap-2">
-                            <Label htmlFor="email">Email</Label>
+                            <Label htmlFor="email">{t("Email")}</Label>
                             <Input id="email" type="email" placeholder="m@example.com" required
                                    onChange={(e) => setEmail(e.target.value)}/>
                         </div>
                         <div className="grid gap-2">
                             <div className="flex items-center">
-                                <Label htmlFor="password">Password</Label>
+                                <Label htmlFor="password">{t("Password")}</Label>
                                 {/*<a*/}
                                 {/*  href="#"*/}
                                 {/*  className="ml-auto inline-block text-sm underline-offset-4 hover:underline">*/}
                                 {/*  Forgot your password?*/}
                                 {/*</a>*/}
                             </div>
-                            <Input id="password" type="password" placeholder="Your password" required
+                            <Input id="password" type="password" placeholder={t("placeholderPassword")} required
                                    onChange={(e) => setPassword(e.target.value)}/>
                         </div>
                         <Button className="w-full" onClick={handleRegister}>
-                            Register
+                            {t("Register")}
                         </Button>
                     </div>
                     <div className="mt-4 text-center text-sm">
-                        Already have an account?{" "}
+                        {t("footerMessage")}
                         <Link href="/login" className="underline underline-offset-4">
-                            Sign in
+                            {t("SignIn")}
                         </Link>
                     </div>
                 </CardContent>
