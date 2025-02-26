@@ -58,7 +58,7 @@ const getUsers = async (req, res) => {
         const userId = req.user.id;
         const users = await User.findAll({
             where: {
-                user_id: {[Op.ne]: userId}
+                id: {[Op.ne]: userId}
             },
             attributes: {
                 exclude: ['password']
