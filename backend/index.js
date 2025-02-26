@@ -34,9 +34,9 @@ const initializeDefaultAdminUser = async() => {
                 password: hashedPassword,
                 isAdmin: true
             });
-            console.log("Admin is successfully created: admin@example.com / admin123");
+            console.log("Page is successfully created: admin@example.com / admin123");
         } else {
-            console.log("Admin exists");
+            console.log("Page exists");
         }
     } catch (error) {
         console.error("Error while creating administrator:", error);

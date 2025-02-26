@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/userModel');
 const {Template} = require("../models");
+const {Op} = require("sequelize");
 
 const register = async (req, res) => {
     const {name, email, password} = req.body;
@@ -54,7 +55,16 @@ const login = async (req, res) => {
 
 const getUsers = async (req, res) => {
     try {
-        const users = await User.findAll({attributes: {exclude: ['password']}});
+        const userId = req.user.id;
+        const users = await User.findAll({
+            where: {
+                user_id: {[Op.ne]: userId}
+            },
+            attributes: {
+                exclude: ['password']
+            },
+            order: [['id', 'DESC']]
+        });
         console.log('Fetched users:', users);
         res.json(users);
     } catch (error) {
@@ -75,7 +85,7 @@ const getCurrentUser = async (req, res) => {
             order: [[Template, 'id', 'DESC']]
         });
         if (!currentUser) {
-            return res.status(404).json({ message: "User not found" });
+            return res.status(404).json({message: "User not found"});
         }
         console.log('Current user:', currentUser);
         res.json(currentUser);
@@ -93,7 +103,7 @@ const getUserById = async (req, res) => {
             attributes: {exclude: ['password']}
         });
         if (!user) {
-            return res.status(404).json({ message: "User not found" });
+            return res.status(404).json({message: "User not found"});
         }
         console.log(user);
         res.status(200).json({message: "User:", user})
@@ -140,9 +150,9 @@ const deleteUser = async (req, res) => {
     try {
         const deletedRowsCount = await User.destroy({where: {id}});
         if (deletedRowsCount === 0) {
-            res.status(404).json({ message: 'User not found.' });
+            res.status(404).json({message: 'User not found.'});
         } else {
-            res.json({ message: 'User deleted successfully.' });
+            res.json({message: 'User deleted successfully.'});
         }
     } catch (error) {
         console.log(error);
@@ -170,4 +180,14 @@ const toggleBlockUser = async (req, res) => {
     }
 
 }
-module.exports = {register, login, getUsers, getCurrentUser, getUserById, makeAdmin, removeAdmin, toggleBlockUser, deleteUser}
+module.exports = {
+    register,
+    login,
+    getUsers,
+    getCurrentUser,
+    getUserById,
+    makeAdmin,
+    removeAdmin,
+    toggleBlockUser,
+    deleteUser
+}

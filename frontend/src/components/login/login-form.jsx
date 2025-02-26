@@ -76,7 +76,7 @@ export function LoginForm({
                                     {/*  Forgot your password?*/}
                                     {/*</a>*/}
                                 </div>
-                                <Input id="password" type="password" required
+                                <Input id="password" type="password" placeholder="Your password" required
                                        onChange={(e) => setPassword(e.target.value)}/>
                             </div>
                             <Button className="w-full" onClick={handleLogin}>

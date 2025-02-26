@@ -10,6 +10,9 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from "@/components/ui/sidebar"
+import getUserInfo from "@/app/api/users/getUserInfo";
+import {useEffect, useState} from "react";
+import Cookie from "js-cookie";
 
 // Menu items.
 const items = [
@@ -24,18 +27,32 @@ const items = [
         icon: Inbox,
     },
     {
+        title: "Admin page",
+        url: "/admin",
+        icon: Settings,
+    },
+    {
         title: "Search",
         url: "#",
         icon: Search,
-    },
-    {
-        title: "Settings",
-        url: "#",
-        icon: Settings,
-    },
+    }
 ]
 
 export function AppSidebar() {
+    // const token = Cookie.get("token");
+    //
+    // const [isAdmin, setIsAdmin] = useState(false);
+    // const getUser = async () => {
+    //     const response = await getUserInfo(token);
+    //     console.log(response.data);
+    //     setIsAdmin(response.data.isAdmin)
+    // }
+    //
+    // useEffect(() => {
+    //     getUser();
+    // }, []);
+
+
     return (
         <Sidebar>
             <SidebarContent>
@@ -53,6 +70,15 @@ export function AppSidebar() {
                                     </SidebarMenuButton>
                                 </SidebarMenuItem>
                             ))}
+                            {/*{isAdmin === true ?*/}
+                            {/*    <SidebarMenuItem key="admin">*/}
+                            {/*        <SidebarMenuButton asChild>*/}
+                            {/*            <Link href="/admin">*/}
+                            {/*                <Home />*/}
+                            {/*                <span>Admin page</span>*/}
+                            {/*            </Link>*/}
+                            {/*        </SidebarMenuButton>*/}
+                            {/*    </SidebarMenuItem> : ""}*/}
                         </SidebarMenu>
                     </SidebarGroupContent>
                 </SidebarGroup>

@@ -67,7 +67,7 @@ export function RegisterForm({
                     <div className="flex flex-col gap-6">
                         <div className="grid gap-2">
                             <Label htmlFor="name">Name</Label>
-                            <Input id="name" type="name" placeholder="your name" required
+                            <Input id="name" type="name" placeholder="Your name" required
                                    onChange={(e) => setName(e.target.value)}/>
                         </div>
                         <div className="grid gap-2">
@@ -84,7 +84,7 @@ export function RegisterForm({
                                 {/*  Forgot your password?*/}
                                 {/*</a>*/}
                             </div>
-                            <Input id="password" type="password" required
+                            <Input id="password" type="password" placeholder="Your password" required
                                    onChange={(e) => setPassword(e.target.value)}/>
                         </div>
                         <Button className="w-full" onClick={handleRegister}>
