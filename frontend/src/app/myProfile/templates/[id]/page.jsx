@@ -45,20 +45,19 @@ export default function MyTemplatePage() {
     const [questionText, setQuestionText] = useState('');
     const [addedQuestions, setAddedQuestions] = useState([]);
 
+    const fetchTemplate = async () => {
+        const response = await getTemplateById(id, token);
+        const data = response.data.template;
+
+        setTemplate(data);
+        setQuestions(data.Questions);
+
+        setTemplateTitle(data.title);
+        setTemplateCategory(data.category);
+        setIsPublic(data.is_public);
+    };
 
     useEffect(() => {
-        const fetchTemplate = async () => {
-            const response = await getTemplateById(id, token);
-            const data = response.data.template;
-
-            setTemplate(data);
-            setQuestions(data.Questions);
-
-            setTemplateTitle(data.title);
-            setTemplateCategory(data.category);
-            setIsPublic(data.is_public);
-        };
-
         fetchTemplate();
     }, []);
 
@@ -128,7 +127,6 @@ export default function MyTemplatePage() {
     }
 
 
-
     // add questions
 
     const addQuestion = () => {
@@ -146,7 +144,7 @@ export default function MyTemplatePage() {
     // delete questions
 
     const handleDeleteQuestion = async (id) => {
-        const response = await deleteQuestion(token, id);
+        const response = await deleteQuestion(token, id, fetchTemplate);
         console.log(response);
     }
 
@@ -163,7 +161,8 @@ export default function MyTemplatePage() {
                     <div className="flex justify-between">
                         <p className="p-4 text-2xl font-bold">Template</p>
                         <div>
-                            <Button variant='secondary' className="m-4" onClick={() => router.push(`/myProfile/templates/${id}/forms`)}>Show forms</Button>
+                            <Button variant='secondary' className="m-4"
+                                    onClick={() => router.push(`/myProfile/templates/${id}/forms`)}>Show forms</Button>
                             <Button className="m-4" onClick={handleDeleteTemplate}>Delete template</Button>
                         </div>
                     </div>

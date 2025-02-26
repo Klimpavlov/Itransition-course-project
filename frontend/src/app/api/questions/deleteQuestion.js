@@ -1,6 +1,6 @@
 import apiClient from "@/app/api/apiClient/apiClient";
 
-const deleteQuestion = async (token, questionId) => {
+const deleteQuestion = async (token, questionId, successCallback) => {
     try {
         const response = await apiClient.delete(`/api/questions/${questionId}`, {
             headers: {
@@ -8,7 +8,7 @@ const deleteQuestion = async (token, questionId) => {
             }
         });
         console.log(response);
-        window.location.reload();
+        successCallback();
         return response;
     } catch (error) {
         console.log(error);
