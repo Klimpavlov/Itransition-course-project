@@ -10,17 +10,21 @@ import getAllUsers from "@/app/api/users/getAllUsers";
 import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/components/ui/card";
 import getTemplateById from "@/app/api/templates/getTemplateById";
 import {useRouter} from "next/navigation";
+import {Button} from "@/components/ui/button";
+import removeAdmin from "@/app/api/users/removeAdmin";
 
 export default function Page() {
     const token = Cookie.get("token");
     const router = useRouter();
 
     const [isAdmin, setIsAdmin] = useState(false);
+    const [userId, setUserId] = useState([]);
     const [users, setUsers] = useState([]);
     const getUser = async () => {
         const response = await getUserInfo(token);
         console.log(response.data);
-        setIsAdmin(response.data.isAdmin)
+        setUserId(response.data.id);
+        setIsAdmin(response.data.isAdmin);
     }
 
     const getUsers = async () => {
@@ -35,13 +39,16 @@ export default function Page() {
     }, []);
 
 
-
     const handleChooseUser = async (userId) => {
         console.log(userId)
         const response = await getTemplateById(userId, token);
         console.log("Template:", response);
         router.push(`/admin/users/${userId}`);
     };
+
+    const handleDemoteSelf = async () => {
+        await removeAdmin(token, userId, getUser);
+    }
 
 
     return (
@@ -55,6 +62,10 @@ export default function Page() {
                     </div>
                     <div className='flex justify-between'>
                         <p className='p-4 text-2xl font-bold'>Users:</p>
+                        {isAdmin ?
+                            <Button className='m-4' onClick={handleDemoteSelf}>Deny yourself admin access</Button>
+                            : <></>
+                        }
 
                     </div>
                     <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 p-4">

@@ -1,4 +1,4 @@
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react"
+import {  Home, Search, Settings2, User, LogOut } from "lucide-react";
 import Link from "next/link";
 import {
     Sidebar,
@@ -9,10 +9,13 @@ import {
     SidebarMenu,
     SidebarMenuButton,
     SidebarMenuItem,
-} from "@/components/ui/sidebar"
-import getUserInfo from "@/app/api/users/getUserInfo";
-import {useEffect, useState} from "react";
+} from "@/components/ui/sidebar";
 import Cookie from "js-cookie";
+
+const handleLogout = () => {
+    Cookie.remove("token");
+    window.location.href = "/login";
+};
 
 // Menu items.
 const items = [
@@ -24,35 +27,26 @@ const items = [
     {
         title: "My profile",
         url: "/myProfile",
-        icon: Inbox,
+        icon: User,
     },
     {
         title: "Admin page",
         url: "/admin",
-        icon: Settings,
+        icon: Settings2,
     },
     {
         title: "Search",
         url: "#",
         icon: Search,
+    },
+    {
+        title: "Logout",
+        action: handleLogout,
+        icon: LogOut
     }
 ]
 
 export function AppSidebar() {
-    // const token = Cookie.get("token");
-    //
-    // const [isAdmin, setIsAdmin] = useState(false);
-    // const getUser = async () => {
-    //     const response = await getUserInfo(token);
-    //     console.log(response.data);
-    //     setIsAdmin(response.data.isAdmin)
-    // }
-    //
-    // useEffect(() => {
-    //     getUser();
-    // }, []);
-
-
     return (
         <Sidebar>
             <SidebarContent>
@@ -63,22 +57,20 @@ export function AppSidebar() {
                             {items.map((item) => (
                                 <SidebarMenuItem key={item.title}>
                                     <SidebarMenuButton asChild>
-                                        <Link href={item.url}>
-                                            <item.icon />
-                                            <span>{item.title}</span>
-                                        </Link>
+                                        {item.action ? (
+                                            <button onClick={item.action} className="flex items-center gap-2">
+                                                <item.icon />
+                                                <span>{item.title}</span>
+                                            </button>
+                                        ) : (
+                                            <Link href={item.url}>
+                                                <item.icon />
+                                                <span>{item.title}</span>
+                                            </Link>
+                                        )}
                                     </SidebarMenuButton>
                                 </SidebarMenuItem>
                             ))}
-                            {/*{isAdmin === true ?*/}
-                            {/*    <SidebarMenuItem key="admin">*/}
-                            {/*        <SidebarMenuButton asChild>*/}
-                            {/*            <Link href="/admin">*/}
-                            {/*                <Home />*/}
-                            {/*                <span>Admin page</span>*/}
-                            {/*            </Link>*/}
-                            {/*        </SidebarMenuButton>*/}
-                            {/*    </SidebarMenuItem> : ""}*/}
                         </SidebarMenu>
                     </SidebarGroupContent>
                 </SidebarGroup>
