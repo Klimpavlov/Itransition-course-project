@@ -1,4 +1,11 @@
 {
+  "Sidebar": {
+    "Home": "Home",
+    "MyProfile": "My profile",
+    "AdminPage": "Admin page",
+    "Search": "Search",
+    "Logout": "Logout"
+  },
   "Login": {
     "error": "error",
     "Login": "Login",
@@ -22,10 +29,40 @@
       "footerMessage": "Already have an account??"
   },
   "MainPage": {
-    "Templates" : "Templates"
+    "Templates" : "Templates",
+    "submitForm": "Submit form",
+    "EnterResponse": "Enter response"
   },
   "MyProfile": {
     "MyTemplates": "My templates",
-    "CreateTemplate": "Create template"
+    "CreateTemplate": "Create template",
+    "Back": "Back",
+    "Title": "Title",
+    "Category": "Category",
+    "Categories": "Categories",
+    "isPublic": "Is public",
+    "State": "State",
+    "AddQuestions": "Add questions",
+    "AddOneMoreQuestion": "Add one more question",
+    "Template": "Template",
+    "ShowForms": "Show forms",
+    "DeleteTemplate": "Delete template",
+    "DeleteQuestion": "Delete question",
+    "AddQuestion": "Add question",
+    "SaveChanges": "Save changes",
+    "forms": "forms",
+    "noForms": "There are no forms",
+    "Close": "Close"
+  },
+  "AdminPage": {
+    "Users": "Users",
+    "DenyAdmin": "Deny yourself admin access",
+    "NotAdmin": "You are not admin",
+    "DeleteUser": "Delete user",
+    "MakeAdmin": "Make admin",
+    "RemoveAdmin": "Remove admin",
+    "BlockUser": "Block user",
+    "UnblockUser": "Unblock user"
+
   }
 }

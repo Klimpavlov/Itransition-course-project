@@ -15,6 +15,8 @@ import {useToast} from "@/hooks/use-toast";
 import {ToastAction} from "@/components/ui/toast";
 import {ModeToggle} from "@/components/theme/toggle-theme/modeToggle";
 import Cookie from "js-cookie";
+import {useTranslations} from "next-intl";
+import {LanguageSwitcher} from "@/components/switchLanguage/language-switcher";
 
 
 export default function TemplatePage() {
@@ -86,6 +88,9 @@ export default function TemplatePage() {
         });
     };
 
+    const t = useTranslations("MainPage");
+
+
     return (
         <SidebarProvider>
             <AppSidebar/>
@@ -93,7 +98,10 @@ export default function TemplatePage() {
                 <main className="">
                     <div className="flex justify-between m-2">
                         <SidebarTrigger/>
-                        <ModeToggle/>
+                        <div className='flex justify-center'>
+                            <LanguageSwitcher/>
+                            <ModeToggle/>
+                        </div>
                     </div>
                     <div className="flex justify-center w-full">
                         <Card key={template.id} className="w-full max-w-4xl mx-auto p-5 cursor-pointer">
@@ -109,7 +117,7 @@ export default function TemplatePage() {
                                         <Input
                                             id={`question-${question.id}`}
                                             type="text"
-                                            placeholder="Enter response"
+                                            placeholder={t("EnterResponse")}
                                             onChange={(e) => handleAnswerChange(question.id, e.target.value)}
                                             required
                                         />
@@ -117,7 +125,7 @@ export default function TemplatePage() {
                                 ))}
                             </CardContent>
                             <CardFooter>
-                                <Button onClick={handleSubmitForm}>Submit form</Button>
+                                <Button onClick={handleSubmitForm}>{t("submitForm")}</Button>
                             </CardFooter>
                         </Card>
                     </div>

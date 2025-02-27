@@ -12,6 +12,8 @@ import {Button} from "@/components/ui/button";
 import {ModeToggle} from "@/components/theme/toggle-theme/modeToggle";
 import getTemplateForms from "@/app/[locale]/api/forms/getTemplateForms";
 import Cookie from "js-cookie";
+import {useTranslations} from "next-intl";
+import {LanguageSwitcher} from "@/components/switchLanguage/language-switcher";
 
 
 export default function templateForms() {
@@ -62,6 +64,7 @@ export default function templateForms() {
         setIsModalOpen(false);
     };
 
+    const t = useTranslations("MyProfile");
 
     return (
         <SidebarProvider>
@@ -70,10 +73,13 @@ export default function templateForms() {
                 <main className="">
                     <div className="flex justify-between m-2">
                         <SidebarTrigger/>
-                        <ModeToggle/>
+                        <div className='flex justify-center'>
+                            <LanguageSwitcher/>
+                            <ModeToggle/>
+                        </div>
                     </div>
                     <div className='flex justify-between'>
-                        <p className='p-4 text-2xl font-bold'>Template "{templateTitle}" forms</p>
+                        <p className='p-4 text-2xl font-bold'>{t("Template")} "{templateTitle}" {t("forms")}</p>
                     </div>
                     <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 p-4">
                         {forms.length !== 0 ? forms.map((form) => (
@@ -89,7 +95,7 @@ export default function templateForms() {
                                 </CardContent>
                             </Card>
                         )) :
-                            <span>There are no forms</span>
+                            <span>{t("noForms")}</span>
                         }
 
                         {isModalOpen && selectedForm && (
@@ -114,7 +120,7 @@ export default function templateForms() {
                                     </Card>
 
                                     <Button className='mt-2' onClick={closeModal}>
-                                        Close
+                                        {t("Close")}
                                     </Button>
                                 </div>
                             </div>

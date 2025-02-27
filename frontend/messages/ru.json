@@ -1,4 +1,11 @@
 {
+  "Sidebar": {
+    "Home": "Главная",
+    "MyProfile": "Мой профиль",
+    "AdminPage": "Страница администратора",
+    "Search": "Поиск",
+    "Logout": "Выйти"
+  },
   "Login": {
     "error": "ошибка",
     "Login": "Войти",
@@ -22,10 +29,39 @@
     "footerMessage": "Уже есть аккаунт?"
   },
   "MainPage": {
-    "Templates": "Шаблоны"
+    "Templates": "Шаблоны",
+    "submitForm": "Отправить форму",
+    "EnterResponse": "Введите ответ"
   },
   "MyProfile": {
     "MyTemplates": "Мои шаблоны",
-    "CreateTemplate": "Создать шаблон"
+    "CreateTemplate": "Создать шаблон",
+    "Back": "Назад",
+    "Title": "Название",
+    "Category": "Категория",
+    "Categories": "Категории",
+    "isPublic": "Обшедоступный",
+    "State": "Состояние",
+    "AddQuestions": "Добавить вопросы",
+    "AddOneMoreQuestion": "Добавить ещё один вопрос",
+    "Template": "Шаблон",
+    "ShowForms": "Показать формы",
+    "DeleteTemplate": "Удалить шаблон",
+    "DeleteQuestion": "Удалить вопрос",
+    "AddQuestion": "Добавить вопрос",
+    "SaveChanges": "Сохранить изменения",
+    "forms": ", формы",
+    "noForms": "Формы отсутствуют",
+    "Close": "Закрыть"
+  },
+  "AdminPage": {
+    "Users": "Пользователи",
+    "DenyAdmin": "Отказаться от прав администратора",
+    "NotAdmin": "Вы не администратор",
+    "DeleteUser": "Удалить пользователя",
+    "MakeAdmin": "Сделать администратором",
+    "RemoveAdmin": "Убрать администратора",
+    "BlockUser": "Заблокировать пользователя",
+    "UnblockUser": "Разблокировать пользователя"
   }
 }

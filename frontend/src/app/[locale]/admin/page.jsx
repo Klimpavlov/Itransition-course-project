@@ -12,6 +12,8 @@ import getTemplateById from "@/app/[locale]/api/templates/getTemplateById";
 import {useRouter} from "next/navigation";
 import {Button} from "@/components/ui/button";
 import removeAdmin from "@/app/[locale]/api/users/removeAdmin";
+import {useTranslations} from "next-intl";
+import {LanguageSwitcher} from "@/components/switchLanguage/language-switcher";
 
 export default function Page() {
     const token = Cookie.get("token");
@@ -50,6 +52,7 @@ export default function Page() {
         await removeAdmin(token, userId, getUser);
     }
 
+    const t = useTranslations("AdminPage");
 
     return (
         <SidebarProvider>
@@ -58,12 +61,15 @@ export default function Page() {
                 <main className="">
                     <div className="flex justify-between m-2">
                         <SidebarTrigger/>
-                        <ModeToggle/>
+                        <div className='flex justify-center'>
+                            <LanguageSwitcher/>
+                            <ModeToggle/>
+                        </div>
                     </div>
                     <div className='flex justify-between'>
-                        <p className='p-4 text-2xl font-bold'>Users:</p>
+                        <p className='p-4 text-2xl font-bold'>{t("Users")}:</p>
                         {isAdmin ?
-                            <Button className='m-4' onClick={handleDemoteSelf}>Deny yourself admin access</Button>
+                            <Button className='m-4' onClick={handleDemoteSelf}>{t("DenyAdmin")}</Button>
                             : <></>
                         }
 
@@ -87,7 +93,7 @@ export default function Page() {
                                     </CardFooter>
                                 </Card>
                             )
-                        ) : "You are not admin"}
+                        ) : t("NotAdmin")}
                     </div>
                 </main>
             </div>

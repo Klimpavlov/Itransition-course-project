@@ -22,6 +22,8 @@ import {useToast} from "@/hooks/use-toast";
 import {useRouter} from "next/navigation";
 import {ModeToggle} from "@/components/theme/toggle-theme/modeToggle";
 import Cookie from "js-cookie";
+import {useTranslations} from "next-intl";
+import {LanguageSwitcher} from "@/components/switchLanguage/language-switcher";
 
 export default function CreateTemplatePage() {
     const {toast} = useToast();
@@ -94,6 +96,9 @@ export default function CreateTemplatePage() {
         router.push("/myProfile")
     }
 
+    const t = useTranslations("MyProfile");
+
+
     return (
         <SidebarProvider>
             <AppSidebar/>
@@ -101,44 +106,47 @@ export default function CreateTemplatePage() {
                 <main>
                     <div className="flex justify-between m-2">
                         <SidebarTrigger/>
-                        <ModeToggle/>
+                        <div className='flex justify-center'>
+                            <LanguageSwitcher/>
+                            <ModeToggle/>
+                        </div>
                     </div>
                     <div className='flex justify-between'>
-                        <p className="p-4 text-2xl font-bold">Create template</p>
-                        <Button className='m-4' onClick={()=>router.push("/myProfile")}>Back</Button>
+                        <p className="p-4 text-2xl font-bold">{t("CreateTemplate")}</p>
+                        <Button className='m-4' onClick={()=>router.push("/myProfile")}>{t("Back")}</Button>
                     </div>
                     <div className="p-4 flex justify-center">
                         <Card className="w-1/2 cursor-pointer">
                             <CardHeader>
                                 <CardTitle></CardTitle>
-                                <CardDescription>Title:</CardDescription>
+                                <CardDescription>{t("Title")}:</CardDescription>
                                 <Input
                                     className="w-full"
                                     placeholder="Enter title"
                                     value={title}
                                     onChange={(e) => setTitle(e.target.value)}
                                 />
-                                <CardDescription>Category:</CardDescription>
+                                <CardDescription>{t("Category")}:</CardDescription>
                                 <Select onValueChange={setCategory}>
                                     <SelectTrigger className="w-full">
                                         <SelectValue placeholder="Select category" />
                                     </SelectTrigger>
                                     <SelectContent>
                                         <SelectGroup>
-                                            <SelectLabel>Categories</SelectLabel>
+                                            <SelectLabel>{t("Categories")}</SelectLabel>
                                             <SelectItem value="Education">Education</SelectItem>
                                             <SelectItem value="Quiz">Quiz</SelectItem>
                                         </SelectGroup>
                                     </SelectContent>
                                 </Select>
-                                <CardDescription>Is public:</CardDescription>
+                                <CardDescription>{t("isPublic")}:</CardDescription>
                                 <Select onValueChange={(value) => setIsPublic(value === "true")}>
                                     <SelectTrigger className="w-full">
                                         <SelectValue placeholder="Select is template public" />
                                     </SelectTrigger>
                                     <SelectContent>
                                         <SelectGroup>
-                                            <SelectLabel>State</SelectLabel>
+                                            <SelectLabel>{t("State")}</SelectLabel>
                                             <SelectItem value="true">True</SelectItem>
                                             <SelectItem value="false">False</SelectItem>
                                         </SelectGroup>
@@ -146,7 +154,7 @@ export default function CreateTemplatePage() {
                                 </Select>
                             </CardHeader>
                             <CardContent>
-                                <CardDescription>Add questions:</CardDescription>
+                                <CardDescription>{t("AddQuestions")}:</CardDescription>
                                 {questions.map((question, index) => (
                                     <Input
                                         key={index}
@@ -157,12 +165,12 @@ export default function CreateTemplatePage() {
                                     />
                                 ))}
                                 <Button variant="outline" onClick={addQuestion} className="mt-3">
-                                    Add one more question
+                                    {t("AddOneMoreQuestion")}
                                 </Button>
                             </CardContent>
                             <CardFooter>
                                 <Button onClick={handleCreateTemplate} className="mt-3">
-                                    Create template
+                                    {t("CreateTemplate")}
                                 </Button>
                             </CardFooter>
                         </Card>

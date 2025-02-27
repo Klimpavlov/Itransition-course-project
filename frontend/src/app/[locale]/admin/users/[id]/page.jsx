@@ -13,6 +13,8 @@ import {useEffect, useState} from "react";
 import {useParams, useRouter} from "next/navigation";
 import Cookie from "js-cookie";
 import {Button} from "@/components/ui/button";
+import {useTranslations} from "next-intl";
+import {LanguageSwitcher} from "@/components/switchLanguage/language-switcher";
 
 export default function UserByIdPage() {
     const token = Cookie.get("token");
@@ -57,6 +59,9 @@ export default function UserByIdPage() {
         router.push("/admin")
     }
 
+    const t = useTranslations("AdminPage");
+
+
     return (
         <SidebarProvider>
             <AppSidebar/>
@@ -64,7 +69,10 @@ export default function UserByIdPage() {
                 <main className="">
                     <div className="flex justify-between m-2">
                         <SidebarTrigger/>
-                        <ModeToggle/>
+                        <div className='flex justify-center'>
+                            <LanguageSwitcher/>
+                            <ModeToggle/>
+                        </div>
                     </div>
                     <div className='flex justify-between'>
                         <p className='p-4 text-2xl font-bold'>User:</p>
@@ -86,12 +94,12 @@ export default function UserByIdPage() {
                             </Card>
                         </div>
                         <div className='flex flex-col gap-2 p-4'>
-                            <Button className='mr-2' onClick={handleDeleteUser}>Delete user</Button>
+                            <Button className='mr-2' onClick={handleDeleteUser}>{t("DeleteUser")}</Button>
                             <Button className='mr-2' onClick={handleToggleBlock}>
-                                {user.isBlocked ? "Unblock user" : "Block user"}
+                                {user.isBlocked ? t("UnblockUser") : t("BlockUser")}
                             </Button>
-                            <Button className='mr-2' onClick={handleMakeAdmin}>Make admin</Button>
-                            <Button onClick={handleRemoveAdmin}>Remove admin</Button>
+                            <Button className='mr-2' onClick={handleMakeAdmin}>{t("MakeAdmin")}</Button>
+                            <Button onClick={handleRemoveAdmin}>{t("RemoveAdmin")}</Button>
                         </div>
                     </div>
                 </main>

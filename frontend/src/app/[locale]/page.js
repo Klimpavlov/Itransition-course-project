@@ -11,6 +11,7 @@ import {useRouter} from 'next/navigation'
 import {ModeToggle} from "@/components/theme/toggle-theme/modeToggle";
 import Cookie from "js-cookie";
 import {useTranslations} from "next-intl";
+import {LanguageSwitcher} from "@/components/switchLanguage/language-switcher";
 
 
 export default function Home() {
@@ -53,7 +54,10 @@ export default function Home() {
                 <main className="">
                     <div className="flex justify-between m-2">
                         <SidebarTrigger/>
-                        <ModeToggle/>
+                        <div className='flex justify-center'>
+                            <LanguageSwitcher/>
+                            <ModeToggle/>
+                        </div>
                     </div>
                     <p className='p-4 text-2xl font-bold'>{t("Templates")}</p>
                     <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 p-4">

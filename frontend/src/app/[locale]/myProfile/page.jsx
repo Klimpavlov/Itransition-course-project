@@ -12,6 +12,7 @@ import {Button} from "@/components/ui/button";
 import {ModeToggle} from "@/components/theme/toggle-theme/modeToggle";
 import Cookie from "js-cookie";
 import {useTranslations} from "next-intl";
+import {LanguageSwitcher} from "@/components/switchLanguage/language-switcher";
 
 
 export default function MyProfile() {
@@ -51,7 +52,10 @@ export default function MyProfile() {
                 <main className="">
                     <div className="flex justify-between m-2">
                         <SidebarTrigger/>
-                        <ModeToggle/>
+                        <div className='flex justify-center'>
+                            <LanguageSwitcher/>
+                            <ModeToggle/>
+                        </div>
                     </div>
                     <div className='flex justify-between'>
                         <p className='p-4 text-2xl font-bold'>{t("MyTemplates")}: {myTemplates.length}</p>

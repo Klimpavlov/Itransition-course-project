@@ -27,6 +27,8 @@ import createQuestions from "@/app/[locale]/api/questions/createQuestions";
 import {ToastAction} from "@/components/ui/toast";
 import {useToast} from "@/hooks/use-toast";
 import Cookie from "js-cookie";
+import {useTranslations} from "next-intl";
+import {LanguageSwitcher} from "@/components/switchLanguage/language-switcher";
 
 
 export default function MyTemplatePage() {
@@ -148,6 +150,7 @@ export default function MyTemplatePage() {
         console.log(response);
     }
 
+    const t = useTranslations("MyProfile");
 
     return (
         <SidebarProvider>
@@ -156,14 +159,17 @@ export default function MyTemplatePage() {
                 <main>
                     <div className="flex justify-between m-2">
                         <SidebarTrigger/>
-                        <ModeToggle/>
+                        <div className='flex justify-center'>
+                            <LanguageSwitcher/>
+                            <ModeToggle/>
+                        </div>
                     </div>
                     <div className="flex justify-between">
-                        <p className="p-4 text-2xl font-bold">Template</p>
+                        <p className="p-4 text-2xl font-bold">{t("Template")}</p>
                         <div>
                             <Button variant='secondary' className="m-4"
-                                    onClick={() => router.push(`/myProfile/templates/${id}/forms`)}>Show forms</Button>
-                            <Button className="m-4" onClick={handleDeleteTemplate}>Delete template</Button>
+                                    onClick={() => router.push(`/myProfile/templates/${id}/forms`)}>{t("ShowForms")}</Button>
+                            <Button className="m-4" onClick={handleDeleteTemplate}>{t("DeleteTemplate")}</Button>
                         </div>
                     </div>
                     <div className="p-4 w-full">
@@ -227,8 +233,7 @@ export default function MyTemplatePage() {
                                                 />
                                                 <Button className='ml-5'
                                                         onClick={() => handleDeleteQuestion(question.id)}>
-                                                    Delete
-                                                    question
+                                                    {t("DeleteQuestion")}
                                                 </Button>
                                             </div>
                                         ))}
@@ -249,14 +254,13 @@ export default function MyTemplatePage() {
                                                 className="mt-3"
                                                 disabled={addedQuestions.length > 0 && addedQuestions[addedQuestions.length - 1].trim() === ""}
                                             >
-                                                Add question
+                                                {t("AddQuestion")}
                                             </Button>
                                         </div>
                                     </CardDescription>
                                 </CardContent>
                                 <CardFooter>
-                                    <Button variant='secondary' className="" onClick={handleUpdateTemplate}>Save
-                                        changes</Button>
+                                    <Button variant='secondary' className="" onClick={handleUpdateTemplate}>{t("SaveChanges")}</Button>
                                 </CardFooter>
                             </Card>
                         )}

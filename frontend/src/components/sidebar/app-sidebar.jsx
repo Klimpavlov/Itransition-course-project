@@ -1,4 +1,6 @@
-import {  Home, Search, Settings2, User, LogOut } from "lucide-react";
+'use client';
+
+import { Home, Search, Settings2, User, LogOut } from "lucide-react";
 import Link from "next/link";
 import {
     Sidebar,
@@ -11,42 +13,44 @@ import {
     SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import Cookie from "js-cookie";
-
-const handleLogout = () => {
-    Cookie.remove("token");
-    window.location.href = "/login";
-};
-
-// Menu items.
-const items = [
-    {
-        title: "Home",
-        url: "/",
-        icon: Home,
-    },
-    {
-        title: "My profile",
-        url: "/myProfile",
-        icon: User,
-    },
-    {
-        title: "Admin page",
-        url: "/admin",
-        icon: Settings2,
-    },
-    {
-        title: "Search",
-        url: "#",
-        icon: Search,
-    },
-    {
-        title: "Logout",
-        action: handleLogout,
-        icon: LogOut
-    }
-]
+import { useTranslations } from "next-intl";
 
 export function AppSidebar() {
+    const t = useTranslations("Sidebar");
+
+    const handleLogout = () => {
+        Cookie.remove("token");
+        window.location.href = "/login";
+    };
+
+    const items = [
+        {
+            title: t("Home"),
+            url: "/",
+            icon: Home,
+        },
+        {
+            title: t("MyProfile"),
+            url: "/myProfile",
+            icon: User,
+        },
+        {
+            title: t("AdminPage"),
+            url: "/admin",
+            icon: Settings2,
+        },
+        {
+            title: t("Search"),
+            url: "#",
+            icon: Search,
+        },
+        {
+            title: t("Logout"),
+            action: handleLogout,
+            icon: LogOut
+        }
+    ];
+
     return (
         <Sidebar>
             <SidebarContent>
@@ -63,7 +67,7 @@ export function AppSidebar() {
                                                 <span>{item.title}</span>
                                             </button>
                                         ) : (
-                                            <Link href={item.url}>
+                                            <Link href={item.url} className="flex items-center gap-2">
                                                 <item.icon />
                                                 <span>{item.title}</span>
                                             </Link>
@@ -76,5 +80,5 @@ export function AppSidebar() {
                 </SidebarGroup>
             </SidebarContent>
         </Sidebar>
-    )
+    );
 }
