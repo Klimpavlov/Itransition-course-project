@@ -42,6 +42,9 @@ export default function MyProfile() {
 
     console.log(myTemplates);
 
+    // salesforce
+
+
     const t = useTranslations("MyProfile");
 
 
@@ -53,6 +56,11 @@ export default function MyProfile() {
                     <div className="flex justify-between m-2">
                         <SidebarTrigger/>
                         <div className='flex justify-center'>
+                            <Button className='mr-2 bg-blue-500'
+                                    onClick={() => router.push("/myProfile/salesforceAccount")}
+                            >
+                                Salesforce account
+                            </Button>
                             <LanguageSwitcher/>
                             <ModeToggle/>
                         </div>
