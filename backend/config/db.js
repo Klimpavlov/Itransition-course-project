@@ -6,7 +6,7 @@ const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, proces
     dialect: 'mysql'
 });
 
-//temporary solution
+// temporary solution
 // const sequelize = new Sequelize('courseProject', 'root', 'Kp11102002', {
 //     host: 'localhost',
 //     dialect: 'mysql'

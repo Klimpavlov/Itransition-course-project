@@ -24,9 +24,9 @@ export default function MyProfile() {
     const [userInfo, setUserInfo] = useState([]);
     const getUser = async () => {
         const response = await getUserInfo(token);
-        console.log("Fetched templates:", response.data.Templates);
-        setMyTemplates(response.data.Templates);
-        setUserInfo(response.data)
+        console.log("Fetched templates:", response.data.user.Templates);
+        setMyTemplates(response.data.user.Templates);
+        setUserInfo(response.data.user)
     }
 
     useEffect(() => {

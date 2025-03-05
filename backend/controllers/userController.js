@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/userModel');
 const {Template} = require("../models");
 const {Op} = require("sequelize");
-const generateApiToken = require('../utils/auth');
+const {generateApiToken} = require('../utils/auth');
 
 const register = async (req, res) => {
     const {name, email, password} = req.body;
