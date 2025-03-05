@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/userModel');
 const {Template} = require("../models");
 const {Op} = require("sequelize");
+const generateApiToken = require('../utils/auth');
 
 const register = async (req, res) => {
     const {name, email, password} = req.body;
@@ -88,7 +89,15 @@ const getCurrentUser = async (req, res) => {
             return res.status(404).json({message: "User not found"});
         }
         console.log('Current user:', currentUser);
-        res.json(currentUser);
+
+        // res.json(currentUser);
+
+        const apiToken = generateApiToken(currentUser.id);
+
+        res.json({
+            user: currentUser,
+            apiToken: apiToken,
+        });
     } catch (error) {
         console.log(error);
         res.status(500).json({message: "Server error"});
