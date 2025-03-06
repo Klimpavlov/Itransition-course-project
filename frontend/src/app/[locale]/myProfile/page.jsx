@@ -13,6 +13,8 @@ import {ModeToggle} from "@/components/theme/toggle-theme/modeToggle";
 import Cookie from "js-cookie";
 import {useTranslations} from "next-intl";
 import {LanguageSwitcher} from "@/components/switchLanguage/language-switcher";
+import CreateJiraTicketModal from "@/components/jira/createJiraTicketModal";
+import getJiraTickets from "@/app/[locale]/api/jira/getJiraTickets";
 
 
 export default function MyProfile() {
@@ -22,11 +24,16 @@ export default function MyProfile() {
 
     const [myTemplates, setMyTemplates] = useState([]);
     const [userInfo, setUserInfo] = useState([]);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [tickets, setTickets] = useState([]);
+
     const getUser = async () => {
         const response = await getUserInfo(token);
         console.log("Fetched templates:", response.data.user.Templates);
         setMyTemplates(response.data.user.Templates);
         setUserInfo(response.data.user)
+        const ticketsResponse = await getJiraTickets();
+        setTickets(ticketsResponse);
     }
 
     useEffect(() => {
@@ -56,6 +63,10 @@ export default function MyProfile() {
                     <div className="flex justify-between m-2">
                         <SidebarTrigger/>
                         <div className='flex justify-center'>
+
+                            <Button className='mr-2 bg-orange-400' onClick={() => setIsModalOpen(true)}>
+                                Create support ticket
+                            </Button>
                             <Button className='mr-2 bg-blue-500'
                                     onClick={() => router.push("/myProfile/salesforceAccount")}
                             >
@@ -73,6 +84,7 @@ export default function MyProfile() {
                             {t("CreateTemplate")}
                         </Button>
                     </div>
+                    <CreateJiraTicketModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
                     <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 p-4">
                         {myTemplates.map((template) =>
                             (
@@ -92,7 +104,26 @@ export default function MyProfile() {
                             )
                         )}
                     </div>
+                    <p className='p-4 text-2xl font-bold'>Tickets:</p>
 
+                    <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 p-4">
+                        {tickets.map((template) =>
+                            (
+                                <Card key={template.id} className="cursor-pointer">
+                                    <CardHeader>
+                                        <CardTitle>{template.fields.summary}</CardTitle>
+                                        <CardDescription>Ticket ID: {template.id}</CardDescription>
+                                        <CardDescription>Ticket key: {template.key}</CardDescription>
+                                    </CardHeader>
+                                    <CardContent>
+                                    </CardContent>
+                                    {/*<CardFooter>*/}
+                                    {/*    <CardDescription>Author: {userInfo.name}</CardDescription>*/}
+                                    {/*</CardFooter>*/}
+                                </Card>
+                            )
+                        )}
+                    </div>
                 </main>
             </div>
         </SidebarProvider>
